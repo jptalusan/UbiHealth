@@ -1,0 +1,8 @@
+"After you’ve finished the above steps and pushed your changes, other  
+users of the project only need to fetch the repository and run carthage bootstrap to get started with the frameworks you’ve added."  
+
+https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos  
+https://firebase.google.com/docs/ios/setup  
+
+Need to setup firebase and carthage for this to work.  
+

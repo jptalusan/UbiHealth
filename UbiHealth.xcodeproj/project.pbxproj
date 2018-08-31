@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		0842A7E321367B4300DCAC2A /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0842A7E221367B4300DCAC2A /* LoginController.swift */; };
-		0842A7E52136B9D000DCAC2A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0842A7E42136B9D000DCAC2A /* GoogleService-Info.plist */; };
 		0867FD12213660640056D0B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0867FD11213660640056D0B8 /* AppDelegate.swift */; };
 		0867FD14213660640056D0B8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0867FD13213660640056D0B8 /* ViewController.swift */; };
 		0867FD17213660650056D0B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0867FD15213660650056D0B8 /* Main.storyboard */; };
 		0867FD192136606A0056D0B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0867FD182136606A0056D0B8 /* Assets.xcassets */; };
 		0867FD1C2136606A0056D0B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0867FD1A2136606A0056D0B8 /* LaunchScreen.storyboard */; };
 		08810F69213924F9009DDD0D /* DiaryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810F68213924F9009DDD0D /* DiaryEntry.swift */; };
+		08810F6B213971ED009DDD0D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08810F6A213971ED009DDD0D /* GoogleService-Info.plist */; };
 		08F165242137C59E005A457E /* DiaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165232137C59E005A457E /* DiaryController.swift */; };
 		08F165262137CB78005A457E /* DiaryEntryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165252137CB78005A457E /* DiaryEntryController.swift */; };
 		08F165282137F02C005A457E /* PassClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165272137F02C005A457E /* PassClass.swift */; };
@@ -27,7 +27,6 @@
 
 /* Begin PBXFileReference section */
 		0842A7E221367B4300DCAC2A /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
-		0842A7E42136B9D000DCAC2A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0867FD0E213660640056D0B8 /* UbiHealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UbiHealth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0867FD11213660640056D0B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0867FD13213660640056D0B8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +35,7 @@
 		0867FD1B2136606A0056D0B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0867FD1D2136606A0056D0B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08810F68213924F9009DDD0D /* DiaryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEntry.swift; sourceTree = "<group>"; };
+		08810F6A213971ED009DDD0D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08F165202136C2C3005A457E /* UbiHealth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UbiHealth.entitlements; sourceTree = "<group>"; };
 		08F165232137C59E005A457E /* DiaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryController.swift; sourceTree = "<group>"; };
 		08F165252137CB78005A457E /* DiaryEntryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEntryController.swift; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 				0867FD182136606A0056D0B8 /* Assets.xcassets */,
 				0867FD1A2136606A0056D0B8 /* LaunchScreen.storyboard */,
 				0867FD1D2136606A0056D0B8 /* Info.plist */,
-				0842A7E42136B9D000DCAC2A /* GoogleService-Info.plist */,
+				08810F6A213971ED009DDD0D /* GoogleService-Info.plist */,
 				08F165272137F02C005A457E /* PassClass.swift */,
 			);
 			path = UbiHealth;
@@ -209,8 +209,8 @@
 			files = (
 				0867FD1C2136606A0056D0B8 /* LaunchScreen.storyboard in Resources */,
 				0867FD192136606A0056D0B8 /* Assets.xcassets in Resources */,
+				08810F6B213971ED009DDD0D /* GoogleService-Info.plist in Resources */,
 				0867FD17213660650056D0B8 /* Main.storyboard in Resources */,
-				0842A7E52136B9D000DCAC2A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
