@@ -7,14 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0842A7E321367B4300DCAC2A /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0842A7E221367B4300DCAC2A /* LoginController.swift */; };
+		0842A7E52136B9D000DCAC2A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0842A7E42136B9D000DCAC2A /* GoogleService-Info.plist */; };
 		0867FD12213660640056D0B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0867FD11213660640056D0B8 /* AppDelegate.swift */; };
 		0867FD14213660640056D0B8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0867FD13213660640056D0B8 /* ViewController.swift */; };
 		0867FD17213660650056D0B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0867FD15213660650056D0B8 /* Main.storyboard */; };
 		0867FD192136606A0056D0B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0867FD182136606A0056D0B8 /* Assets.xcassets */; };
 		0867FD1C2136606A0056D0B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0867FD1A2136606A0056D0B8 /* LaunchScreen.storyboard */; };
+		08810F69213924F9009DDD0D /* DiaryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810F68213924F9009DDD0D /* DiaryEntry.swift */; };
+		08F165242137C59E005A457E /* DiaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165232137C59E005A457E /* DiaryController.swift */; };
+		08F165262137CB78005A457E /* DiaryEntryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165252137CB78005A457E /* DiaryEntryController.swift */; };
+		08F165282137F02C005A457E /* PassClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165272137F02C005A457E /* PassClass.swift */; };
+		08F1652A213804E5005A457E /* PersonalReportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F16529213804E5005A457E /* PersonalReportController.swift */; };
+		08F1652C2138060A005A457E /* SuggestionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F1652B2138060A005A457E /* SuggestionController.swift */; };
+		08F1652E21380614005A457E /* CheckFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F1652D21380614005A457E /* CheckFriendsController.swift */; };
+		08F1653021390F70005A457E /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F1652F21390F70005A457E /* Charts.framework */; };
+		76340BCA98606D87831EC3BC /* Pods_UbiHealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381F259722364B381AFF880E /* Pods_UbiHealth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0842A7E221367B4300DCAC2A /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		0842A7E42136B9D000DCAC2A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0867FD0E213660640056D0B8 /* UbiHealth.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UbiHealth.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0867FD11213660640056D0B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0867FD13213660640056D0B8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +35,18 @@
 		0867FD182136606A0056D0B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0867FD1B2136606A0056D0B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0867FD1D2136606A0056D0B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		08810F68213924F9009DDD0D /* DiaryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEntry.swift; sourceTree = "<group>"; };
+		08F165202136C2C3005A457E /* UbiHealth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UbiHealth.entitlements; sourceTree = "<group>"; };
+		08F165232137C59E005A457E /* DiaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryController.swift; sourceTree = "<group>"; };
+		08F165252137CB78005A457E /* DiaryEntryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEntryController.swift; sourceTree = "<group>"; };
+		08F165272137F02C005A457E /* PassClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassClass.swift; sourceTree = "<group>"; };
+		08F16529213804E5005A457E /* PersonalReportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalReportController.swift; sourceTree = "<group>"; };
+		08F1652B2138060A005A457E /* SuggestionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionController.swift; sourceTree = "<group>"; };
+		08F1652D21380614005A457E /* CheckFriendsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckFriendsController.swift; sourceTree = "<group>"; };
+		08F1652F21390F70005A457E /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Carthage/Build/iOS/Charts.framework; sourceTree = "<group>"; };
+		3611EA5CFD042CCE3961CC60 /* Pods-UbiHealth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UbiHealth.release.xcconfig"; path = "Pods/Target Support Files/Pods-UbiHealth/Pods-UbiHealth.release.xcconfig"; sourceTree = "<group>"; };
+		381F259722364B381AFF880E /* Pods_UbiHealth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UbiHealth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5E50FF743F6A27F73C160BD /* Pods-UbiHealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UbiHealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UbiHealth/Pods-UbiHealth.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +54,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08F1653021390F70005A457E /* Charts.framework in Frameworks */,
+				76340BCA98606D87831EC3BC /* Pods_UbiHealth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0842A7E121366C2200DCAC2A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				0867FD13213660640056D0B8 /* ViewController.swift */,
+				0842A7E221367B4300DCAC2A /* LoginController.swift */,
+				08F165232137C59E005A457E /* DiaryController.swift */,
+				08F165252137CB78005A457E /* DiaryEntryController.swift */,
+				08F16529213804E5005A457E /* PersonalReportController.swift */,
+				08F1652B2138060A005A457E /* SuggestionController.swift */,
+				08F1652D21380614005A457E /* CheckFriendsController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		0867FD05213660640056D0B8 = {
 			isa = PBXGroup;
 			children = (
 				0867FD10213660640056D0B8 /* UbiHealth */,
 				0867FD0F213660640056D0B8 /* Products */,
+				A0268ABA7CC124100C1AD75C /* Pods */,
+				B8FD17321DA6CB99FBC51E34 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +97,44 @@
 		0867FD10213660640056D0B8 /* UbiHealth */ = {
 			isa = PBXGroup;
 			children = (
+				08810F67213924C9009DDD0D /* Models */,
+				08F165202136C2C3005A457E /* UbiHealth.entitlements */,
+				0842A7E121366C2200DCAC2A /* Controller */,
 				0867FD11213660640056D0B8 /* AppDelegate.swift */,
-				0867FD13213660640056D0B8 /* ViewController.swift */,
 				0867FD15213660650056D0B8 /* Main.storyboard */,
 				0867FD182136606A0056D0B8 /* Assets.xcassets */,
 				0867FD1A2136606A0056D0B8 /* LaunchScreen.storyboard */,
 				0867FD1D2136606A0056D0B8 /* Info.plist */,
+				0842A7E42136B9D000DCAC2A /* GoogleService-Info.plist */,
+				08F165272137F02C005A457E /* PassClass.swift */,
 			);
 			path = UbiHealth;
+			sourceTree = "<group>";
+		};
+		08810F67213924C9009DDD0D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				08810F68213924F9009DDD0D /* DiaryEntry.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A0268ABA7CC124100C1AD75C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A5E50FF743F6A27F73C160BD /* Pods-UbiHealth.debug.xcconfig */,
+				3611EA5CFD042CCE3961CC60 /* Pods-UbiHealth.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B8FD17321DA6CB99FBC51E34 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				08F1652F21390F70005A457E /* Charts.framework */,
+				381F259722364B381AFF880E /* Pods_UbiHealth.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +144,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0867FD202136606A0056D0B8 /* Build configuration list for PBXNativeTarget "UbiHealth" */;
 			buildPhases = (
+				A26DCC437F2CA0B271BE3C05 /* [CP] Check Pods Manifest.lock */,
 				0867FD0A213660640056D0B8 /* Sources */,
 				0867FD0B213660640056D0B8 /* Frameworks */,
 				0867FD0C213660640056D0B8 /* Resources */,
+				8E82E86B555BD15CA9FA4131 /* [CP] Embed Pods Frameworks */,
+				C343EBE98D58647C4D8DE852 /* [CP] Copy Pods Resources */,
+				08F1653121390F8B005A457E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -96,6 +173,14 @@
 				TargetAttributes = {
 					0867FD0D213660640056D0B8 = {
 						CreatedOnToolsVersion = 9.4.1;
+						SystemCapabilities = {
+							com.apple.InterAppAudio = {
+								enabled = 0;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -125,10 +210,86 @@
 				0867FD1C2136606A0056D0B8 /* LaunchScreen.storyboard in Resources */,
 				0867FD192136606A0056D0B8 /* Assets.xcassets in Resources */,
 				0867FD17213660650056D0B8 /* Main.storyboard in Resources */,
+				0842A7E52136B9D000DCAC2A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		08F1653121390F8B005A457E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Carthage/Build/iOS/Charts.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+		8E82E86B555BD15CA9FA4131 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-UbiHealth/Pods-UbiHealth-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UbiHealth/Pods-UbiHealth-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A26DCC437F2CA0B271BE3C05 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-UbiHealth-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C343EBE98D58647C4D8DE852 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UbiHealth/Pods-UbiHealth-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0867FD0A213660640056D0B8 /* Sources */ = {
@@ -136,7 +297,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				0867FD14213660640056D0B8 /* ViewController.swift in Sources */,
+				08F1652C2138060A005A457E /* SuggestionController.swift in Sources */,
+				08F1652E21380614005A457E /* CheckFriendsController.swift in Sources */,
+				08F165282137F02C005A457E /* PassClass.swift in Sources */,
+				08F165242137C59E005A457E /* DiaryController.swift in Sources */,
+				08F1652A213804E5005A457E /* PersonalReportController.swift in Sources */,
+				08810F69213924F9009DDD0D /* DiaryEntry.swift in Sources */,
+				0842A7E321367B4300DCAC2A /* LoginController.swift in Sources */,
 				0867FD12213660640056D0B8 /* AppDelegate.swift in Sources */,
+				08F165262137CB78005A457E /* DiaryEntryController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,10 +447,16 @@
 		};
 		0867FD212136606A0056D0B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5E50FF743F6A27F73C160BD /* Pods-UbiHealth.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = UbiHealth/UbiHealth.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 49552NKN8F;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = UbiHealth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -296,10 +471,16 @@
 		};
 		0867FD222136606A0056D0B8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3611EA5CFD042CCE3961CC60 /* Pods-UbiHealth.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = UbiHealth/UbiHealth.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 49552NKN8F;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = UbiHealth/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
