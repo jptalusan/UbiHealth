@@ -76,4 +76,6 @@ fastlane/test_output
 
 GoogleService-Info.plist
 
+.DS_Store
+
 # End of https://www.gitignore.io/api/swift

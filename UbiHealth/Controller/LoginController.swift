@@ -37,22 +37,22 @@ class LoginController: UIViewController {
     func handleLogin() {
         print("Login!")
         guard let email = emailTextField.text,
-            let password = passwordTextField.text else {
+            let password = passwordTextField.text,
+            email.count > 0,
+            password.count > 0 else {
                 print("Form is not valid")
                 return
         }
-        Auth.auth().signIn(withEmail: email, password: password) {
-            user, error in
-            if error != nil {
-                let alert = UIAlertController(title: "Login Failed",
-                                              message: error?.localizedDescription,
+        Auth.auth().signIn(withEmail: email, password: password) { user, error in
+            if let error = error, user == nil {
+                let alert = UIAlertController(title: "Sign In Failed",
+                                              message: error.localizedDescription,
                                               preferredStyle: .alert)
                 
                 alert.addAction(UIAlertAction(title: "OK", style: .default))
+                
                 self.present(alert, animated: true, completion: nil)
-                return
             }
-            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -197,6 +197,16 @@ class LoginController: UIViewController {
         setupLoginRegisterButton()
         setupProfileImageView()
         setupLoginRegisterSegmentedControl()
+        
+        Auth.auth().addStateDidChangeListener() { auth, user in
+            // 2
+            if user != nil {
+                // 3
+                self.navigationController?.popViewController(animated: true)
+                self.emailTextField.text = nil
+                self.passwordTextField.text = nil
+            }
+        }
     }
     
     func setupLoginRegisterSegmentedControl() {
