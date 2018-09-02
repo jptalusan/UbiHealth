@@ -15,6 +15,7 @@
 		0867FD1C2136606A0056D0B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0867FD1A2136606A0056D0B8 /* LaunchScreen.storyboard */; };
 		08810F69213924F9009DDD0D /* DiaryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810F68213924F9009DDD0D /* DiaryEntry.swift */; };
 		08C74CF2213A197F0063CE07 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08C74CF1213A197F0063CE07 /* GoogleService-Info.plist */; };
+		08C74CF4213BC9470063CE07 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C74CF3213BC9470063CE07 /* Extensions.swift */; };
 		08F165242137C59E005A457E /* DiaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165232137C59E005A457E /* DiaryController.swift */; };
 		08F165262137CB78005A457E /* DiaryEntryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165252137CB78005A457E /* DiaryEntryController.swift */; };
 		08F165282137F02C005A457E /* PassClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165272137F02C005A457E /* PassClass.swift */; };
@@ -36,6 +37,7 @@
 		0867FD1D2136606A0056D0B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		08810F68213924F9009DDD0D /* DiaryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEntry.swift; sourceTree = "<group>"; };
 		08C74CF1213A197F0063CE07 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		08C74CF3213BC9470063CE07 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		08F165202136C2C3005A457E /* UbiHealth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UbiHealth.entitlements; sourceTree = "<group>"; };
 		08F165232137C59E005A457E /* DiaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryController.swift; sourceTree = "<group>"; };
 		08F165252137CB78005A457E /* DiaryEntryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEntryController.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				0867FD1D2136606A0056D0B8 /* Info.plist */,
 				08C74CF1213A197F0063CE07 /* GoogleService-Info.plist */,
 				08F165272137F02C005A457E /* PassClass.swift */,
+				08C74CF3213BC9470063CE07 /* Extensions.swift */,
 			);
 			path = UbiHealth;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				08810F69213924F9009DDD0D /* DiaryEntry.swift in Sources */,
 				0842A7E321367B4300DCAC2A /* LoginController.swift in Sources */,
 				0867FD12213660640056D0B8 /* AppDelegate.swift in Sources */,
+				08C74CF4213BC9470063CE07 /* Extensions.swift in Sources */,
 				08F165262137CB78005A457E /* DiaryEntryController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

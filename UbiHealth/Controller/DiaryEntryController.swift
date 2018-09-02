@@ -48,36 +48,42 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
         return button
     }()
     
+    fileprivate func showAlertError(title: String, _ error: String) {
+        let alert = UIAlertController(title: title,
+                                      message: error,
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @objc
     func handleSubmit() {
         guard let selectedIndexes = tableView.indexPathsForSelectedRows else {
-            print("Error getting selected rows")
+            showAlertError(title: "Error getting selected rows", "Please select an entry.")
             return
         }
         
         var itemCSV: String = ""
         for index in selectedIndexes {
             itemCSV += "\(items[index.row]);"
-//            print("\(items[index.row])") //Here you get the text of cell
         }
         let output = itemCSV.dropLast()
         print(output)
 
         //Use as key
-        let datestr = Date().currentUTCTimeZoneDate
-        print(datestr)
-        let datetimeArr = datestr.components(separatedBy: " ")
-        print(datetimeArr[0])
-        print(datetimeArr[1])
+        let currentDateTime = Date()
+        let currentDateTimeString = currentDateTime.currentUTCDateTimeToString
         
-        //Convert back for comparing
-        let date2 = convertDateTimeStringToDate(datetime: datestr)
-        print(date2)
+        let datetimeStringArray = currentDateTimeString.components(separatedBy: " ")
+        
+        let dateString = datetimeStringArray[0] + " 00:00:00 +0000" //"2018-03-15 21:05:04 +0000"
+        let timeString = datetimeStringArray[1] + " " + datetimeStringArray[2]
         
         let userID = Auth.auth().currentUser!.uid
         
         //TODO Check if entry exists for the day and ask if want to overwrite
-        let diaryEntryRef = usersRef.child(userID).child("diary_entries").child(datetimeArr[0].lowercased()).child(diaryEntryType)
+        let diaryEntryRef = usersRef.child(userID).child("diary_entries").child(dateString).child(diaryEntryType)
         
         diaryEntryRef.observeSingleEvent(of: .value, with: { (snapshot) in
             print("observerSingleEvent")
@@ -89,31 +95,23 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
                 //TODO: Ask if want to overwrite prior entry
                 print("Entry already exists")
                 if let entry = entries["entry"],
-                    let time = entries["time"] {
-//                    print("on \(time) you entered: \(entry)")
+                    let time = entries["time"] as? String {
                     let entryStr = entry as! String
-                    let alert = UIAlertController(title: "Duplicate entry detected.",
-                                                  message: "You entered: \(entryStr.capitalizingFirstLetter()) on \(time)",
-                                                  preferredStyle: .alert)
-    
-                    alert.addAction(UIAlertAction(title: "OK", style: .default))
-                    self.present(alert, animated: true, completion: nil)
+                    
+                    let date = String(dateString.split(separator: " ")[0])
+                    let datetime = date + " " + time
+                    self.showAlertError(title: "Duplicate entry detected.", "You entered: \(entryStr.capitalizeFirstLetter()) on \(datetime.UTCStringToLocalString)")
+                    return
                 }
             } else {
                 let values = [//"type": diaryEntryType as String,
                               "entry": String(output),
-                              "time": datetimeArr[1]]
+                              "time": timeString]
                 diaryEntryRef.updateChildValues(values) {
                     error, ref in
                     if error != nil {
                         print(error!.localizedDescription)
-                        let alert = UIAlertController(title: "Inserting data failed",
-                                                      message: error?.localizedDescription,
-                                                      preferredStyle: .alert)
-        
-                        alert.addAction(UIAlertAction(title: "OK", style: .default))
-                        self.present(alert, animated: true, completion: nil)
-        
+                        self.showAlertError(title: "Error inserting data", error!.localizedDescription)
                         return
                     }
                     print("Saved successfully into firebase")
@@ -156,7 +154,6 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
             }
             self.items = newItems
-//            print(self.items)
             self.tableView.reloadData()
         }
     }
@@ -170,7 +167,7 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         let foodItem = items[indexPath.row]
         
-        cell.textLabel?.text = foodItem.capitalizingFirstLetter()
+        cell.textLabel?.text = foodItem.capitalizeFirstLetter()
         
         return cell
     }
@@ -186,52 +183,4 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
                          bottom: view.bottomAnchor, trailing: view.trailingAnchor,
                          size: .init(width: 0, height: 0))
     }
-    
-    func convertDateTimeStringToDate(datetime: String) -> Date {
-        let dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = dateFormat
-        guard let date = dateFormatter.date(from: datetime) else {
-            return Date()
-        }
-        return date
-    }
-    
-
-}
-
-extension Date {
-    
-    var currentUTCTimeZoneDate: String {
-        let formatter = DateFormatter()
-        formatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
-        formatter.amSymbol = "AM"
-        formatter.pmSymbol = "PM"
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        return "\(formatter.string(from: self))"
-    }
-}
-
-extension String {
-    func capitalizingFirstLetter() -> String {
-        return prefix(1).uppercased() + dropFirst()
-    }
-    
-    mutating func capitalizeFirstLetter() {
-        self = self.capitalizingFirstLetter()
-    }
-    
-    var convertDateStringToDate: Date {
-        let dateFormat = "yyyy-MM-dd"
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = dateFormat
-        guard let date = dateFormatter.date(from: self) else {
-            return Date()
-        }
-        return date
-    }
-    
 }

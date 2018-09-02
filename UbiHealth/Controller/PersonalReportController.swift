@@ -90,7 +90,6 @@ class PersonalReportController: UIViewController {
             self.navigationItem.title = "\(name)'s Personal Report"
         })
         
-//        view.backgroundColor = UIColor(white: 0.9, alpha: 1)
         view.addSubview(titleLabel)
         view.addSubview(pieChart)
         view.addSubview(dietExerciseSegmentedControl)
@@ -116,8 +115,6 @@ class PersonalReportController: UIViewController {
         pieChart.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
         
         pieChart.anchor(top: titleLabel.bottomAnchor, leading: view.leadingAnchor, bottom: dietExerciseSegmentedControl.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -8, right: 0))
-//        pieChart.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
-//        pieChart.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.8).isActive = true
     }
     
     func setupDietExerciseSegmentedControl() {
@@ -134,7 +131,7 @@ class PersonalReportController: UIViewController {
         for (key, val) in entriesDict {
             print(key, val)
             let percent = Double(val) / Double(sum)
-            let entry = PieChartDataEntry(value: percent, label: key.capitalizingFirstLetter())
+            let entry = PieChartDataEntry(value: percent, label: key.capitalizeFirstLetter())
             dataEntries.append(entry)
         }
         
@@ -142,8 +139,6 @@ class PersonalReportController: UIViewController {
         
         chartDataSet.sliceSpace = 2
         chartDataSet.selectionShift = 10
-//        chartDataSet.highlightColor = .blue
-//        chartDataSet.formSize = 20
         chartDataSet.valueTextColor = .black
         var colors: [UIColor] = []
         for _ in 0..<entriesDict.count {
@@ -167,40 +162,27 @@ class PersonalReportController: UIViewController {
     }
     
     func getEntriesFromDB() {
-//        let datestr = Date().currentUTCTimeZoneDate
-//        print(datestr)
-//        let datetimeArr = datestr.components(separatedBy: " ")
-//        print(datetimeArr[0])
-        
-        let dates = Date().currentWeekStartAndEnd
-        
-//        print(dates)
-//        let currentDate = datetimeArr[0].convertDateStringToDate
-        let startWeekDate = dates[0].convertDateStringToDate
-        let endWeekDate = dates[1].convertDateStringToDate
-        
+        let startAndEndDates = Date().currentWeeksStartAndEnd
+        let startDate = startAndEndDates[0]
+        let endDate = startAndEndDates[1]
         let diaryEntryRef = usersRef.child(userID).child("diary_entries")
         
-        diaryEntryRef.observeSingleEvent(of: .value, with: { snapshot in
+        diaryEntryRef.observe(.value, with: { snapshot in
             var diaryEntries: [DiaryEntry] = []
             for child in snapshot.children {
                 let snap = child as! DataSnapshot
-                let childDate = snap.key.convertDateStringToDate
-                if childDate >= startWeekDate && childDate <= endWeekDate {
+                let childDate = snap.key.convertDateTimeStringToDate
+                if (childDate.compare(startDate) == ComparisonResult.orderedDescending &&
+                    childDate.compare(endDate) == ComparisonResult.orderedAscending) {
                     for snapChild in snap.children {
                         if let snapChildSnap = snapChild as? DataSnapshot,
                             let diaryEntry = DiaryEntry(date: childDate, snapshot: snapChildSnap) {
-//                            let entryType = snapChildSnap.key
-//                            print(diaryEntry.toAnyObject())
                             diaryEntries.append(diaryEntry)
                         }
                     }
                 }
             }
             self.diaryEntries = diaryEntries
-            
-            //TODO: Use counted set
-            print(self.diaryEntries.count)
             var foodEntryArray: [String] = []
             var exerciseEntryArray: [String] = []
 
@@ -215,9 +197,7 @@ class PersonalReportController: UIViewController {
                 }
             }
             self.foodEntriesDict = foodEntryArray.freq()
-            print(self.foodEntriesDict)
             self.exerEntriesDict = exerciseEntryArray.freq()
-            print(self.exerEntriesDict)
             
             if self.dietExerciseSegmentedControl.selectedSegmentIndex == 0 {
                 self.fillChart(entriesDict: self.foodEntriesDict)
@@ -225,67 +205,6 @@ class PersonalReportController: UIViewController {
                 self.fillChart(entriesDict: self.exerEntriesDict)
             }
         })
-    }
-}
-
-extension PersonalReportController: ChartViewDelegate {
-    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
-        let index = highlight.y
-        let key = highlight.x
-        let label = Array(foodEntriesDict.keys)[Int(key)]
-        print("Selected \(label): \(index)")
-        
-        let dates = Date().currentWeekStartAndEnd
-        
-        print(dates)
-        let startDate = dates[0].convertDateStringToDate
-        let endDate = dates[1].convertDateStringToDate
-        if startDate < endDate {
-            print("YES!")
-        }
-    }
-}
-
-//TODO: Adjust dates to just include prior week's data
-extension Date {
-    var yesterday: Date {
-        return Calendar.current.date(byAdding: .day, value: -1, to: noon)!
-    }
-    var tomorrow: Date {
-        return Calendar.current.date(byAdding: .day, value: 1, to: noon)!
-    }
-    var noon: Date {
-        return Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: self)!
-    }
-    var month: Int {
-        return Calendar.current.component(.month,  from: self)
-    }
-    var currentWeekMonday: Date {
-        return Calendar(identifier: .iso8601).date(from: Calendar(identifier: .iso8601).dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date()))!
-    }
-    var startOfWeek: Date? { //Sunday
-        let gregorian = Calendar(identifier: .gregorian)
-        guard let sunday = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) else { return nil }
-        return gregorian.date(byAdding: .day, value: gregorian.firstWeekday, to: sunday)
-    }
-    var convertDateToString: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        
-        return "\(formatter.string(from: self))"
-    }
-    var currentWeekStartAndEnd: [String] {
-        let start = self.startOfWeek
-        let end = Calendar.current.date(byAdding: .day, value: 6, to: start!)
-        let startDateStr = start?.convertDateToString.split(separator: " ")[0]
-        let endDateStr = end?.convertDateToString.split(separator: " ")[0]
-        var out: [String] = []
-        out.append(String(startDateStr!))
-        out.append(String(endDateStr!))
-        return out
-    }
-    var isLastDayOfMonth: Bool {
-        return tomorrow.month != month
     }
 }
 
