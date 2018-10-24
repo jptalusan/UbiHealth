@@ -19,6 +19,8 @@ class PersonalReportController: UIViewController {
     var diaryEntries: [DiaryEntry] = []
     var foodEntriesDict = [String: Int]()
     var exerEntriesDict = [String: Int]()
+    var isThisCurrentUser = false
+    var colors: [UIColor] = []
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -64,6 +66,26 @@ class PersonalReportController: UIViewController {
         return sc
     }()
     
+    lazy var suggestionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor(r: 80, g: 101, b:161)
+        button.setTitle("Suggestions", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(handleSuggestion), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc
+    func handleSuggestion() {
+        print("Suggestions!!!")
+        let suggestionController = SuggestionController()
+        PassClass.myInstance.string1 = userID
+        self.navigationController?.pushViewController(suggestionController, animated: true)
+    }
     @objc
     func handleDietExerciseChange() {
         print(dietExerciseSegmentedControl.selectedSegmentIndex)
@@ -78,7 +100,9 @@ class PersonalReportController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(r: 61, g: 91, b: 151)
-        userID = Auth.auth().currentUser!.uid
+        let currentUserID = Auth.auth().currentUser!.uid
+        let diaryEntryType = PassClass.myInstance.string1
+        userID = diaryEntryType
         
         usersRef.child(userID).observeSingleEvent(of: .value, with: { snapshot in
 //            print(snapshot.value as Any)
@@ -93,6 +117,13 @@ class PersonalReportController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(pieChart)
         view.addSubview(dietExerciseSegmentedControl)
+        if (currentUserID != userID) {
+            view.addSubview(suggestionButton)
+            setupSuggestionButton()
+            isThisCurrentUser = false
+        } else {
+            isThisCurrentUser = true
+        }
         setupPieChart()
         setupDietExerciseSegmentedControl()
         setupTitleLabel()
@@ -107,18 +138,29 @@ class PersonalReportController: UIViewController {
     
     func setupTitleLabel() {
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
-        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -100, right: 0), size: .init(width: 0, height: 0))
+        titleLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: pieChart.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
     }
     
     func setupPieChart() {
         pieChart.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
         pieChart.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
         
-        pieChart.anchor(top: titleLabel.bottomAnchor, leading: view.leadingAnchor, bottom: dietExerciseSegmentedControl.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -8, right: 0))
+        pieChart.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -8, right: 0), size: .init(width: 0, height: view.frame.height - 100))
     }
     
     func setupDietExerciseSegmentedControl() {
-        dietExerciseSegmentedControl.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 8, left: 8, bottom: -8, right: -8), size: .init(width: 0, height: 50))
+        if (isThisCurrentUser) {
+            dietExerciseSegmentedControl.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 8, left: 8, bottom: -8, right: -8), size: .init(width: 20, height: 50))
+        } else {
+            dietExerciseSegmentedControl.anchor(top: nil, leading: view.leadingAnchor, bottom: suggestionButton.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 8, left: 8, bottom: -8, right: -8), size: .init(width: 0, height: 50))
+        }
+
+    }
+    
+    func setupSuggestionButton() {
+        suggestionButton.anchor(top: nil, leading: view.leadingAnchor,
+                                bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor,padding: .init(top: 8, left: 8, bottom: -8, right: -8), size: .init(width: 0, height: 50))
     }
     
     func fillChart(entriesDict: [String: Int]) {
@@ -140,17 +182,21 @@ class PersonalReportController: UIViewController {
         chartDataSet.sliceSpace = 2
         chartDataSet.selectionShift = 10
         chartDataSet.valueTextColor = .black
-        var colors: [UIColor] = []
-        for _ in 0..<entriesDict.count {
-            let red = Double(arc4random_uniform(256))
-            let green = Double(arc4random_uniform(256))
-            let blue = Double(arc4random_uniform(256))
-            
-            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
-            colors.append(color)
-
+        
+        if (colors.count == 0) {
+            for _ in 0..<entriesDict.count {
+                let red = Double(arc4random_uniform(256))
+                let green = Double(arc4random_uniform(256))
+                let blue = Double(arc4random_uniform(256))
+                
+                let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
+                colors.append(color)
+            }
+            chartDataSet.colors = colors
+        } else {
             chartDataSet.colors = colors
         }
+        
         
         let chartData = PieChartData(dataSet: chartDataSet)
         let formatter = NumberFormatter()
@@ -172,6 +218,15 @@ class PersonalReportController: UIViewController {
             for child in snapshot.children {
                 let snap = child as! DataSnapshot
                 let childDate = snap.key.convertDateTimeStringToDate
+                //                TODO: only show a week's worth.
+                /*
+                 Oct 8: I check the friend's list
+                 I will be shown data from oct 1-7.
+                 
+                 Oct 9-13: Same behavior, show Oct 1-7
+                 OCt 14: Show Oct 8-13...
+                 
+                */
                 if (childDate.compare(startDate) == ComparisonResult.orderedDescending &&
                     childDate.compare(endDate) == ComparisonResult.orderedAscending) {
                     for snapChild in snap.children {

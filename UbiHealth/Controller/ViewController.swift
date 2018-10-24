@@ -130,8 +130,8 @@ class ViewController: UIViewController {
     
     @objc
     func handleSuggestion() {
-        let suggestionController = SuggestionController()
-        self.navigationController?.pushViewController(suggestionController, animated: true)
+        let suggestionsForYouController = SuggestionsForYouController()
+        self.navigationController?.pushViewController(suggestionsForYouController, animated: true)
     }
     
     @objc
@@ -142,6 +142,8 @@ class ViewController: UIViewController {
     
     @objc
     func handlePersonalReport() {
+        let currUserId = Auth.auth().currentUser!.uid
+        PassClass.myInstance.string1 = currUserId
         let personalReportController = PersonalReportController()
         self.navigationController?.pushViewController(personalReportController, animated: true)
     }

@@ -127,6 +127,15 @@ extension PersonalReportController: ChartViewDelegate {
     }
 }
 
+extension SuggestionsForYouController: ChartViewDelegate {
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        let index = highlight.y
+        let key = highlight.x
+        let label = Array(suggestionsDict.keys)[Int(key)]
+        print("Selected \(label): \(index)")
+    }
+}
+
 extension Calendar {
     static let gregorian = Calendar(identifier: .gregorian)
 }
