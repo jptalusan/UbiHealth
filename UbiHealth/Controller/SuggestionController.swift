@@ -92,7 +92,7 @@ class SuggestionController: UIViewController, UITableViewDelegate, UITableViewDa
             print("observerSingleEvent")
             
             if snapshot.hasChild(currentUserId) {
-                var entries = snapshot.value as! [String:AnyObject]
+                let entries = snapshot.value as! [String:AnyObject]
                 print(entries)
                 
                 //TODO: Ask if want to overwrite prior entry

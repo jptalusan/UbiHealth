@@ -208,30 +208,27 @@ class PersonalReportController: UIViewController {
     }
     
     func getEntriesFromDB() {
-        let startAndEndDates = Date().currentWeeksStartAndEnd
-        let startDate = startAndEndDates[0]
-        let endDate = startAndEndDates[1]
         let diaryEntryRef = usersRef.child(userID).child("diary_entries")
+        
+        //Firebase is asynchronous
+        let lastWeekDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!
+        let startOfLastWeek = lastWeekDate.startOfWeek
+        let endOfLastWeek = lastWeekDate.endOfWeek
+        
+        let start = startOfLastWeek?.strippedTime(time: "00:00:00 +0000")
+        let end = endOfLastWeek?.strippedTime(time: "23:59:59 +0000")
+        
+        self.titleLabel.text = (startOfLastWeek?.dateString)! + " to " + (endOfLastWeek?.dateString)!
         
         diaryEntryRef.observe(.value, with: { snapshot in
             var diaryEntries: [DiaryEntry] = []
             for child in snapshot.children {
                 let snap = child as! DataSnapshot
                 let childDate = snap.key.convertDateTimeStringToDate
-                //                TODO: only show a week's worth.
-                /*
-                 Oct 8: I check the friend's list
-                 I will be shown data from oct 1-7.
-                 
-                 Oct 9-13: Same behavior, show Oct 1-7
-                 OCt 14: Show Oct 8-13...
-                 
-                */
-                if (childDate.compare(startDate) == ComparisonResult.orderedDescending &&
-                    childDate.compare(endDate) == ComparisonResult.orderedAscending) {
-                    for snapChild in snap.children {
-                        if let snapChildSnap = snapChild as? DataSnapshot,
-                            let diaryEntry = DiaryEntry(date: childDate, snapshot: snapChildSnap) {
+                for snapChild in snap.children {
+                    if let snapChildSnap = snapChild as? DataSnapshot,
+                        let diaryEntry = DiaryEntry(date: childDate, snapshot: snapChildSnap) {
+                        if ((diaryEntry.date >= start!) && (diaryEntry.date <= end!)) {
                             diaryEntries.append(diaryEntry)
                         }
                     }

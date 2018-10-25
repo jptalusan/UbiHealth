@@ -75,16 +75,17 @@ class CheckFriendsController: UIViewController, UITableViewDelegate, UITableView
         view.backgroundColor = UIColor(r: 61, g: 91, b: 151)
         
         let userID = Auth.auth().currentUser!.uid
+        navigationItem.title = "Your Friends"
         
-        usersRef.child(userID).observe(.value, with: { snapshot in
-            //            print(snapshot.value as Any)
-            guard let userDict = snapshot.value as? [String: Any],
-                let _ = userDict["email"] as? String,
-                let name = userDict["name"] as? String else {
-                    return
-            }
-            self.navigationItem.title = "Your Friends"
-        })
+//        usersRef.child(userID).observe(.value, with: { snapshot in
+//            //            print(snapshot.value as Any)
+//            guard let userDict = snapshot.value as? [String: Any],
+//                let _ = userDict["email"] as? String,
+//                let _ = userDict["name"] as? String else {
+//                    return
+//            }
+//            self.navigationItem.title = "Your Friends"
+//        })
         
         usersRef.observe(.value) { snapshot in
             var newItems: [String] = []

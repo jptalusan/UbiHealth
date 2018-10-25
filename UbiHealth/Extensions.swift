@@ -24,9 +24,31 @@ extension Date {
         let newDate = dateFormatter.string(from: finalDate!) //"2018-03-15 21:05:04 +0000"
         return newDate
     }
+//    var startOfWeek: Date? {
+//        return Calendar.gregorian.date(from: Calendar.gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))
+//    }
+    
     var startOfWeek: Date? {
-        return Calendar.gregorian.date(from: Calendar.gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self))
+        let gregorian = Calendar(identifier: .gregorian)
+        guard let sunday = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) else { return nil }
+        return gregorian.date(byAdding: .day, value: 1, to: sunday)
     }
+    
+    var endOfWeek: Date? {
+        let gregorian = Calendar(identifier: .gregorian)
+        guard let sunday = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)) else { return nil }
+        return gregorian.date(byAdding: .day, value: 7, to: sunday)
+    }
+    
+    var getDateString: String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        let newDate = dateFormatter.string(from: self)
+        return newDate
+    }
+    
     var currentWeeksStartAndEnd: [Date] {
         let start = self.startOfWeek
         let end = Calendar.current.date(byAdding: .day, value: 6, to: start!)
@@ -34,6 +56,30 @@ extension Date {
         out.append(start!)
         out.append(end!)
         return out
+    }
+    
+    func stripTime() -> Date {
+        let components = Calendar.current.dateComponents([.year, .month, .day], from: self)
+        let date = Calendar.current.date(from: components)
+        return date!
+    }
+    
+    func strippedTime(time: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = DateFormatter.Style.none
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        var stringDate = dateFormatter.string(from: self)
+        stringDate += " "
+        stringDate += time
+        return stringDate.convertDateTimeStringToDate
+    }
+    
+    var dateString: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = DateFormatter.Style.none
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let stringDate = dateFormatter.string(from: self)
+        return stringDate
     }
 }
 

@@ -23,6 +23,7 @@ class SuggestionsForYouController: UIViewController {
     
     var suggestionsDict = [String: Int]()
     var colors: [UIColor] = []
+    var suggestions: [Suggestion] = []
     
     fileprivate func showAlertError(title: String, _ error: String) {
         let alert = UIAlertController(title: title,
@@ -32,6 +33,19 @@ class SuggestionsForYouController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        //        label.backgroundColor = UIColor(r: 80, g: 101, b:161)
+//        label.text = "Week"
+        //        label.text = "+"
+        label.textAlignment = .center
+        label.font = label.font.withSize(30)
+        label.font = .boldSystemFont(ofSize: 20.0)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        return label
+    }()
     
     lazy var pieChart: PieChartView = {
         let p = PieChartView()
@@ -61,44 +75,66 @@ class SuggestionsForYouController: UIViewController {
         let currentUserId = Auth.auth().currentUser!.uid
         
         self.navigationItem.title = "Friends' Suggestions"
-        
         //Firebase is asynchronous
+        let lastWeekDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!
+        let startOfLastWeek = lastWeekDate.startOfWeek
+        let endOfLastWeek = lastWeekDate.endOfWeek
+        
+        let start = startOfLastWeek?.strippedTime(time: "00:00:00 +0000")
+        let end = endOfLastWeek?.strippedTime(time: "23:59:59 +0000")
+        
+        self.titleLabel.text = (startOfLastWeek?.dateString)! + " to " + (endOfLastWeek?.dateString)!
+        
         usersRef.child(currentUserId).child("suggestions").observe(.value) { snapshot in
             self.count = snapshot.childrenCount
-            print(self.count)
+            var newSuggestions: [Suggestion] = []
+//            print(self.count)
             for child in snapshot.children {
                 let snap = child as! DataSnapshot
                 let childDate = snap.key.convertDateTimeStringToDate
+                //TODO: Check if the suggestions fall within the previous week.
                 for snapChild in snap.children {
                     if let snapChildSnap = snapChild as? DataSnapshot,
                         let suggestion = Suggestion(date: childDate, snapshot: snapChildSnap) {
-                        print(suggestion.suggested)
-                        self.usersRef.child(suggestion.key).observe(.value, with: { snapshot in
-                            guard let userDict = snapshot.value as? [String: Any],
-                                let _ = userDict["email"] as? String,
-                                let name = userDict["name"] as? String else {
-                                    return
-                            }
-                            print("Suggested by: " + name)
-                        })
-                        
-                        print("At" + suggestion.time + " on: ")
-                        print(suggestion.date)
+//                        print(suggestion.date)
+//                        print(start as Any)
+//                        print(end as Any)
+                        if ((suggestion.date >= start!) && (suggestion.date <= end!)) {
+//                            print("Yes it is within this week!")
+//                            print(suggestion.suggested)
+                            newSuggestions.append(suggestion)
+                        }
                     }
                 }
             }
+            self.suggestions = newSuggestions
+            var suggestedArray: [String] = []
+            for suggestion in self.suggestions {
+                let suggestionArray = suggestion.suggested.split(separator: ";")
+                print(suggestionArray)
+                suggestionArray.forEach { suggestedArray.append(String($0)) }
+            }
+            self.suggestionsDict = suggestedArray.freq()
+            self.fillChart(entriesDict: self.suggestionsDict)
         }
         //        TODO: Parse the data and tally it and then show pie chart
+        view.addSubview(titleLabel)
         view.addSubview(pieChart)
         setupPieChart()
-        
+        setupTitleLabel()
+    }
+    
+    func setupTitleLabel() {
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: pieChart.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 50))
     }
     
     func setupPieChart() {
-//        pieChart.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
-//        pieChart.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
+        pieChart.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
+        pieChart.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
         
-        pieChart.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
+        pieChart.anchor(top: titleLabel.bottomAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
     }
     
     func fillChart(entriesDict: [String: Int]) {
@@ -144,59 +180,5 @@ class SuggestionsForYouController: UIViewController {
         
         pieChart.data = chartData
     }
-    
-    func getEntriesFromDB() {
-//        let startAndEndDates = Date().currentWeeksStartAndEnd
-//        let startDate = startAndEndDates[0]
-//        let endDate = startAndEndDates[1]
-//        let diaryEntryRef = usersRef.child(userID).child("diary_entries")
-//
-//        diaryEntryRef.observe(.value, with: { snapshot in
-//            var diaryEntries: [DiaryEntry] = []
-//            for child in snapshot.children {
-//                let snap = child as! DataSnapshot
-//                let childDate = snap.key.convertDateTimeStringToDate
-//                //                TODO: only show a week's worth.
-//                /*
-//                 Oct 8: I check the friend's list
-//                 I will be shown data from oct 1-7.
-//
-//                 Oct 9-13: Same behavior, show Oct 1-7
-//                 OCt 14: Show Oct 8-13...
-//
-//                 */
-//                if (childDate.compare(startDate) == ComparisonResult.orderedDescending &&
-//                    childDate.compare(endDate) == ComparisonResult.orderedAscending) {
-//                    for snapChild in snap.children {
-//                        if let snapChildSnap = snapChild as? DataSnapshot,
-//                            let diaryEntry = DiaryEntry(date: childDate, snapshot: snapChildSnap) {
-//                            diaryEntries.append(diaryEntry)
-//                        }
-//                    }
-//                }
-//            }
-//            self.diaryEntries = diaryEntries
-//            var foodEntryArray: [String] = []
-//            var exerciseEntryArray: [String] = []
-//
-//            for entry in self.diaryEntries {
-//                //Assume that the entries here fall into the requested week (but we should still check (TODO))
-//                let entryArray = entry.entry.split(separator: ";")
-//                print(entryArray)
-//                if entry.key != "Exercise" {
-//                    entryArray.forEach { foodEntryArray.append(String($0)) }
-//                } else {
-//                    entryArray.forEach { exerciseEntryArray.append(String($0)) }
-//                }
-//            }
-//            self.foodEntriesDict = foodEntryArray.freq()
-//            self.exerEntriesDict = exerciseEntryArray.freq()
-//
-//            if self.dietExerciseSegmentedControl.selectedSegmentIndex == 0 {
-//                self.fillChart(entriesDict: self.foodEntriesDict)
-//            } else {
-//                self.fillChart(entriesDict: self.exerEntriesDict)
-//            }
-//        })
-    }
 }
+
