@@ -11,34 +11,58 @@ import Firebase
 
 class ViewController: UIViewController {
 
+    let usersRef = Database.database().reference(withPath: "users")
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
+
+
         
-        //Check if user is currently logged in
-        if Auth.auth().currentUser?.uid == nil {
-//            performSelector(#selector(handleLogout), with: nil, afterDelay: 0)
-            perform(#selector(handleLogout), with: nil, afterDelay: 0)
-            handleLogout()
-        }
         view.backgroundColor = UIColor(r: 61, g: 91, b: 151)
-        view.addSubview(titleLabel)
         
-        [diaryButton, suggestionButton, checkFriendsButton, personalReportButton, profileImageView].forEach { view.addSubview($0) }
+        [diaryButton, suggestionButton, checkFriendsButton, personalReportButton, profileImageView, titleLabel, nameLabel].forEach { view.addSubview($0) }
         
         setupTitleLabel()
-        
+        setupNameLabel()
         setupDiaryButton()
         setupSuggestionButton()
         setupCheckFriendsButton()
         setupPersonalReportButton()
         setupProfileImageView()
+        
+        let userId = Auth.auth().currentUser?.uid
+        //Check if user is currently logged in
+        if userId == nil {
+            //            performSelector(#selector(handleLogout), with: nil, afterDelay: 0)
+            perform(#selector(handleLogout), with: nil, afterDelay: 0)
+            handleLogout()
+        } else {
+//            usersRef.child(userId!).observeSingleEvent(of: .value, with: { snapshot in
+//                //            print(snapshot.value as Any)
+//                guard let userDict = snapshot.value as? [String: Any],
+//                    let _ = userDict["email"] as? String,
+//                    let name = userDict["name"] as? String else {
+//                        return
+//                }
+//                self.nameLabel.text = "Welcome \(name)!"
+//            })
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.navigationBar.prefersLargeTitles = false
+        let userId = Auth.auth().currentUser?.uid
+        usersRef.child(userId!).observeSingleEvent(of: .value, with: { snapshot in
+            //            print(snapshot.value as Any)
+            guard let userDict = snapshot.value as? [String: Any],
+                let _ = userDict["email"] as? String,
+                let name = userDict["name"] as? String else {
+                    return
+            }
+            self.nameLabel.text = "Welcome \(name)!"
+        })
     }
     
     @objc
@@ -68,6 +92,16 @@ class ViewController: UIViewController {
 //        label.backgroundColor = UIColor(r: 80, g: 101, b:161)
         label.text = "UBIHEALTH"
 //        label.text = "+"
+        label.textAlignment = .center
+        label.font = label.font.withSize(30)
+        label.font = .boldSystemFont(ofSize: 20.0)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+        return label
+    }()
+    
+    let nameLabel: UILabel = {
+        let label = UILabel()
         label.textAlignment = .center
         label.font = label.font.withSize(30)
         label.font = .boldSystemFont(ofSize: 20.0)
@@ -150,7 +184,7 @@ class ViewController: UIViewController {
     
     func setupDiaryButton() {
         //need x, y, width, height constraints
-        diaryButton.anchor(top: titleLabel.bottomAnchor, leading: view.leadingAnchor,
+        diaryButton.anchor(top: nameLabel.bottomAnchor, leading: view.leadingAnchor,
                            bottom: nil, trailing: view.centerXAnchor,
                            padding: .init(top: 50, left: 12, bottom: 0, right: -6),
                            size: .init(width: 0, height: 100))
@@ -166,7 +200,7 @@ class ViewController: UIViewController {
     
     func setupCheckFriendsButton() {
         //need x, y, width, height constraints
-        checkFriendsButton.anchor(top: titleLabel.bottomAnchor, leading: view.centerXAnchor,
+        checkFriendsButton.anchor(top: nameLabel.bottomAnchor, leading: view.centerXAnchor,
                                 bottom: nil, trailing: view.trailingAnchor,
                                 padding: .init(top: 50, left: 6, bottom: 0, right: -12))
         checkFriendsButton.anchorSize(to: diaryButton)
@@ -180,33 +214,38 @@ class ViewController: UIViewController {
         personalReportButton.anchorSize(to: diaryButton)
     }
     
-    func setupTitleLabel() {
-        //need x, y, width, height constraints
-        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor,
-                          bottom: nil, trailing: view.trailingAnchor,
-                          padding: .init(top: 200, left: 0, bottom: 0, right: 0),
-                          size: .init(width: 0, height: 100))
-    }
-    
     func setupProfileImageView() {
         //need x, y, width, height constraints
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil,
-                          bottom: titleLabel.topAnchor, trailing: nil,
-                          padding: .init(top: 20, left: 0, bottom: 0, right: 0),
-                          size: .init(width: 0, height: 0))
+                                bottom: titleLabel.topAnchor, trailing: nil,
+                                padding: .init(top: 20, left: 0, bottom: 0, right: 0),
+                                size: .init(width: 0, height: 0))
     }
+    
+    func setupTitleLabel() {
+        //need x, y, width, height constraints
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor,
+                          bottom: nameLabel.topAnchor, trailing: view.trailingAnchor,
+                          padding: .init(top: 200, left: 0, bottom: 0, right: 0),
+                          size: .init(width: 0, height: 100))
+    }
+    
+    func setupNameLabel() {
+        //need x, y, width, height constraints
+        nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        nameLabel.anchor(top: titleLabel.bottomAnchor, leading: view.leadingAnchor,
+                         bottom: nil, trailing: view.trailingAnchor,
+                         padding: .init(top: 50, left: 0, bottom: 0, right: 0),
+                         size: .init(width: 0, height: 50))
+    }
+    
+
     
     @objc
     func handleDiary() {
         let diaryController = DiaryController()
         self.navigationController?.pushViewController(diaryController, animated: true)
-//        let alert = UIAlertController(title: "Diary pressed",
-//                                      message: "HELLO",
-//                                      preferredStyle: .alert)
-//
-//        alert.addAction(UIAlertAction(title: "OK", style: .default))
-//        self.present(alert, animated: true, completion: nil)
     }
 }

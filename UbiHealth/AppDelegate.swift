@@ -23,10 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
+        Database.database().isPersistenceEnabled = true
         let navController = UINavigationController(rootViewController: ViewController())
         window?.rootViewController = navController
         
-        Database.database().isPersistenceEnabled = true
         
         return true
     }
