@@ -74,6 +74,7 @@ class LoginController: UIViewController {
             return
         }
         
+        //TODO: When user registers, also create a users.userid.email and name entries
         Auth.auth().createUser(withEmail: email, password: password) {
             user, error in
             
