@@ -33,6 +33,8 @@ class LoginController: UIViewController {
         return button
     }()
     
+   
+    
     @objc
     func handleLogin() {
         print("Login!")
@@ -55,6 +57,18 @@ class LoginController: UIViewController {
             }
         }
     }
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        //        label.backgroundColor = UIColor(r: 80, g: 101, b:161)
+        label.text = "Welcome to UbiHealth"
+        //        label.text = "+"
+        label.textAlignment = .center
+        label.font = label.font.withSize(30)
+        label.font = .boldSystemFont(ofSize: 20.0)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .red
+        return label
+    }()
     
     @objc
     func handleLoginRegister() {
@@ -145,7 +159,7 @@ class LoginController: UIViewController {
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "logo")
+        imageView.image = UIImage(named: "bk")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -198,6 +212,11 @@ class LoginController: UIViewController {
         setupProfileImageView()
         setupLoginRegisterSegmentedControl()
         
+        
+//        setupTitleLabel()
+
+        
+        
         Auth.auth().addStateDidChangeListener() { auth, user in
             // 2
             if user != nil {
@@ -210,20 +229,28 @@ class LoginController: UIViewController {
     }
     
     func setupLoginRegisterSegmentedControl() {
+        loginRegisterSegmentedControl.anchor(top: profileImageView.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,
+                                             padding: .init(top: 30, left: 12, bottom: 0, right: -12),
+                                             size: .init(width: 0, height: 50))
+        
         //need x, y, width, height constraints
         loginRegisterSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loginRegisterSegmentedControl.bottomAnchor.constraint(equalTo: inputsContainerView.topAnchor,constant: -12).isActive = true
-        loginRegisterSegmentedControl.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor, multiplier: 1).isActive = true
-        loginRegisterSegmentedControl.heightAnchor.constraint(equalToConstant: 36).isActive = true
+//        loginRegisterSegmentedControl.bottomAnchor.constraint(equalTo: inputsContainerView.topAnchor,constant: -12).isActive = true
+//        loginRegisterSegmentedControl.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor, multiplier: 1).isActive = true
+//        loginRegisterSegmentedControl.heightAnchor.constraint(equalToConstant: 36).isActive = true
     }
     
     func setupProfileImageView() {
+        profileImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,
+                                padding: .init(top: 12, left: 12, bottom: 0, right: -12),
+                                size: .init(width: 200, height: 200))
         //need x, y, width, height constraints
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         // -12 to be above 12 pixels
-        profileImageView.bottomAnchor.constraint(equalTo: loginRegisterSegmentedControl.topAnchor, constant: -12).isActive = true
-        profileImageView.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        profileImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+//        profileImageView.bottomAnchor.constraint(equalTo: loginRegisterSegmentedControl.topAnchor, constant: -12).isActive = true
+//        profileImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
+//        profileImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+        
     }
     
     var inputsContainerViewHeightAnchor: NSLayoutConstraint?
@@ -232,12 +259,16 @@ class LoginController: UIViewController {
     var passwordTextFieldHeightAnchor: NSLayoutConstraint?
     
     func setupInputsContainerView() {
+        inputsContainerView.anchor(top: loginRegisterSegmentedControl.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,
+                                   padding: .init(top: 12, left: 12, bottom: 0, right: -12),
+                                   size: .init(width: 0, height: 150))
+
         //need x, y, width, height constraints
         inputsContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         inputsContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        inputsContainerView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
-        inputsContainerViewHeightAnchor = inputsContainerView.heightAnchor.constraint(equalToConstant: 150)
-        inputsContainerViewHeightAnchor?.isActive = true
+//        inputsContainerView.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -24).isActive = true
+//        inputsContainerViewHeightAnchor = inputsContainerView.heightAnchor.constraint(equalToConstant: 150)
+//        inputsContainerViewHeightAnchor?.isActive = true
         
         inputsContainerView.addSubview(nameTextField)
         inputsContainerView.addSubview(nameSeparatorView)
@@ -297,5 +328,14 @@ class LoginController: UIViewController {
         // Hide the navigation bar on the this view controller
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         self.navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
+    func setupTitleLabel() {
+        //need x, y, width, height constraints
+        titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor,
+                          bottom: profileImageView.topAnchor, trailing: view.trailingAnchor,
+                          padding: .init(top: 200, left: 0, bottom: 0, right: 0),
+                          size: .init(width: 0, height: 100))
     }
 }

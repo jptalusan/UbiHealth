@@ -60,7 +60,7 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
     @objc
     func handleSubmit() {
         guard let selectedIndexes = tableView.indexPathsForSelectedRows else {
-            showAlertError(title: "Error getting selected rows", "Please select an entry.")
+            showAlertError(title: "Sorry! No Items Selected", "Please select an entry.")
             return
         }
         
@@ -100,7 +100,7 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
                     
                     let date = String(dateString.split(separator: " ")[0])
                     let datetime = date + " " + time
-                    self.showAlertError(title: "Duplicate entry detected.", "You entered: \(entryStr.capitalizeFirstLetter()) on \(datetime.UTCStringToLocalString)")
+                    self.showAlertError(title: "Oops!", "You have already submitted this entry for today -> \(entryStr.capitalizeFirstLetter()) at \(datetime.UTCStringToLocalString)")
                     return
                 }
             } else {

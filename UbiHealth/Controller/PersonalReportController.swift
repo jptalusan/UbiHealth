@@ -181,7 +181,7 @@ class PersonalReportController: UIViewController {
         
         chartDataSet.sliceSpace = 2
         chartDataSet.selectionShift = 10
-        chartDataSet.valueTextColor = .black
+        chartDataSet.valueTextColor = .white
         
         if (colors.count == 0) {
             for _ in 0..<entriesDict.count {

@@ -17,7 +17,6 @@
 		08800A7321807B2700DED48F /* SuggestionsForYouController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08800A7221807B2700DED48F /* SuggestionsForYouController.swift */; };
 		08800A7521809C0A00DED48F /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08800A7421809C0A00DED48F /* Suggestion.swift */; };
 		08810F69213924F9009DDD0D /* DiaryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810F68213924F9009DDD0D /* DiaryEntry.swift */; };
-		08C74CF2213A197F0063CE07 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08C74CF1213A197F0063CE07 /* GoogleService-Info.plist */; };
 		08C74CF4213BC9470063CE07 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C74CF3213BC9470063CE07 /* Extensions.swift */; };
 		08F165242137C59E005A457E /* DiaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165232137C59E005A457E /* DiaryController.swift */; };
 		08F165262137CB78005A457E /* DiaryEntryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165252137CB78005A457E /* DiaryEntryController.swift */; };
@@ -27,6 +26,7 @@
 		08F1652E21380614005A457E /* CheckFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F1652D21380614005A457E /* CheckFriendsController.swift */; };
 		08F1653021390F70005A457E /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F1652F21390F70005A457E /* Charts.framework */; };
 		76340BCA98606D87831EC3BC /* Pods_UbiHealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381F259722364B381AFF880E /* Pods_UbiHealth.framework */; };
+		BBC7E0EB219BF43500A0ED6C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBC7E0EA219BF43500A0ED6C /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +42,6 @@
 		08800A7221807B2700DED48F /* SuggestionsForYouController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsForYouController.swift; sourceTree = "<group>"; };
 		08800A7421809C0A00DED48F /* Suggestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suggestion.swift; sourceTree = "<group>"; };
 		08810F68213924F9009DDD0D /* DiaryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEntry.swift; sourceTree = "<group>"; };
-		08C74CF1213A197F0063CE07 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08C74CF3213BC9470063CE07 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		08F165202136C2C3005A457E /* UbiHealth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UbiHealth.entitlements; sourceTree = "<group>"; };
 		08F165232137C59E005A457E /* DiaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryController.swift; sourceTree = "<group>"; };
@@ -55,6 +54,7 @@
 		3611EA5CFD042CCE3961CC60 /* Pods-UbiHealth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UbiHealth.release.xcconfig"; path = "Pods/Target Support Files/Pods-UbiHealth/Pods-UbiHealth.release.xcconfig"; sourceTree = "<group>"; };
 		381F259722364B381AFF880E /* Pods_UbiHealth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UbiHealth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E50FF743F6A27F73C160BD /* Pods-UbiHealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UbiHealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UbiHealth/Pods-UbiHealth.debug.xcconfig"; sourceTree = "<group>"; };
+		BBC7E0EA219BF43500A0ED6C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +113,8 @@
 				0867FD15213660650056D0B8 /* Main.storyboard */,
 				0867FD182136606A0056D0B8 /* Assets.xcassets */,
 				0867FD1A2136606A0056D0B8 /* LaunchScreen.storyboard */,
+				BBC7E0EA219BF43500A0ED6C /* GoogleService-Info.plist */,
 				0867FD1D2136606A0056D0B8 /* Info.plist */,
-				08C74CF1213A197F0063CE07 /* GoogleService-Info.plist */,
 				08C74CF3213BC9470063CE07 /* Extensions.swift */,
 			);
 			path = UbiHealth;
@@ -161,8 +161,8 @@
 				0867FD0B213660640056D0B8 /* Frameworks */,
 				0867FD0C213660640056D0B8 /* Resources */,
 				8E82E86B555BD15CA9FA4131 /* [CP] Embed Pods Frameworks */,
-				C343EBE98D58647C4D8DE852 /* [CP] Copy Pods Resources */,
 				08F1653121390F8B005A457E /* ShellScript */,
+				BBD26F892181C95100A04743 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -190,6 +190,9 @@
 								enabled = 0;
 							};
 							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -220,7 +223,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0867FD1C2136606A0056D0B8 /* LaunchScreen.storyboard in Resources */,
-				08C74CF2213A197F0063CE07 /* GoogleService-Info.plist in Resources */,
+				BBC7E0EB219BF43500A0ED6C /* GoogleService-Info.plist in Resources */,
 				0867FD192136606A0056D0B8 /* Assets.xcassets in Resources */,
 				0867FD17213660650056D0B8 /* Main.storyboard in Resources */,
 			);
@@ -242,7 +245,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 		8E82E86B555BD15CA9FA4131 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -286,20 +289,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C343EBE98D58647C4D8DE852 /* [CP] Copy Pods Resources */ = {
+		BBD26F892181C95100A04743 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
+			inputFileListPaths = (
 			);
-			name = "[CP] Copy Pods Resources";
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
+			);
+			outputFileListPaths = (
+			);
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Carthage/Build/iOS/Charts.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-UbiHealth/Pods-UbiHealth-resources.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellPath = "/usr/local/bin/carthage copy-frameworks\n/usr/local/bin/carthage copy-frameworks\n/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -468,7 +475,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = UbiHealth/UbiHealth.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 49552NKN8F;
+				DEVELOPMENT_TEAM = ZZHKQZ59ZC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -478,7 +485,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ubi.UbiHealth;
+				PRODUCT_BUNDLE_IDENTIFIER = com.research.UbiHealth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -492,7 +499,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = UbiHealth/UbiHealth.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 49552NKN8F;
+				DEVELOPMENT_TEAM = ZZHKQZ59ZC;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -502,7 +509,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ubi.UbiHealth;
+				PRODUCT_BUNDLE_IDENTIFIER = com.research.UbiHealth;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

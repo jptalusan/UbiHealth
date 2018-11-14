@@ -8,12 +8,14 @@
 
 import UIKit
 import Firebase
+import UserNotifications
 
 class ViewController: UIViewController {
 
     let usersRef = Database.database().reference(withPath: "users")
     override func viewDidLoad() {
         super.viewDidLoad()
+        fornotification()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
 
@@ -90,7 +92,7 @@ class ViewController: UIViewController {
     let titleLabel: UILabel = {
         let label = UILabel()
 //        label.backgroundColor = UIColor(r: 80, g: 101, b:161)
-        label.text = "UBIHEALTH"
+        label.text = "UbiHealth"
 //        label.text = "+"
         label.textAlignment = .center
         label.font = label.font.withSize(30)
@@ -114,6 +116,7 @@ class ViewController: UIViewController {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor(r: 80, g: 101, b:161)
         button.setTitle("Diary", for: .normal)
+        button.setBackgroundImage(UIImage (named: "diary"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -127,6 +130,7 @@ class ViewController: UIViewController {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor(r: 80, g: 101, b:161)
         button.setTitle("Suggestion", for: .normal)
+        button.setBackgroundImage(UIImage (named: "suggest"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -140,6 +144,7 @@ class ViewController: UIViewController {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor(r: 80, g: 101, b:161)
         button.setTitle("Check Friends", for: .normal)
+        button.setBackgroundImage(UIImage (named: "friends"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -153,6 +158,7 @@ class ViewController: UIViewController {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor(r: 80, g: 101, b:161)
         button.setTitle("Personal Report", for: .normal)
+        button.setBackgroundImage(UIImage (named: "report"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -161,6 +167,41 @@ class ViewController: UIViewController {
         button.addTarget(self, action: #selector(handlePersonalReport), for: .touchUpInside)
         return button
     }()
+    
+    @objc
+    
+    func fornotification(){
+        let notifications = ["Breakfast": [8, 30],
+                             "Lunch": [16,57],
+                             "Snacks": [16,54],
+                             "Dinner": [16,56],
+                             "Exercise":[21,30]]
+        
+        for (diary, time) in notifications{
+            print(diary, time)
+            let content = UNMutableNotificationContent()
+            content.title = "UbiHealth"
+            content.subtitle = diary
+            content.body = "Please enter in your diary"
+            content.sound = UNNotificationSound.default()
+            
+            let center =  UNUserNotificationCenter.current()
+        
+            var date = DateComponents()
+            date.hour = time[0]
+            date.minute = time[1]
+            let trigger = UNCalendarNotificationTrigger(dateMatching: date, repeats: true)
+            
+            let request = UNNotificationRequest(identifier: diary, content: content, trigger: trigger)
+            
+            //add request to notification center
+            center.add(request) { (error) in
+                if error != nil {
+                    print("error \(String(describing: error))")
+                }
+            }
+        }
+    }
     
     @objc
     func handleSuggestion() {
@@ -186,15 +227,15 @@ class ViewController: UIViewController {
         //need x, y, width, height constraints
         diaryButton.anchor(top: nameLabel.bottomAnchor, leading: view.leadingAnchor,
                            bottom: nil, trailing: view.centerXAnchor,
-                           padding: .init(top: 50, left: 12, bottom: 0, right: -6),
-                           size: .init(width: 0, height: 100))
+                           padding: .init(top: 50, left: 12, bottom: 0, right: -6))
     }
     
     func setupSuggestionButton() {
         //need x, y, width, height constraints
         suggestionButton.anchor(top: diaryButton.bottomAnchor, leading: view.leadingAnchor,
-                                bottom: nil, trailing: view.centerXAnchor,
-                                padding: .init(top: 12, left: 12, bottom: 0, right: -6))
+                                bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.centerXAnchor,
+                                padding: .init(top: 12, left: 12, bottom: -12, right: -6)
+                                )
         suggestionButton.anchorSize(to: diaryButton)
     }
     
@@ -209,8 +250,8 @@ class ViewController: UIViewController {
     func setupPersonalReportButton() {
         //need x, y, width, height constraints
         personalReportButton.anchor(top: checkFriendsButton.bottomAnchor, leading: view.centerXAnchor,
-                                  bottom: nil, trailing: view.trailingAnchor,
-                                  padding: .init(top: 12, left: 6, bottom: 0, right: -12))
+                                  bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor,
+                                  padding: .init(top: 12, left: 6, bottom: -12, right: -12))
         personalReportButton.anchorSize(to: diaryButton)
     }
     
@@ -219,8 +260,7 @@ class ViewController: UIViewController {
         profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         profileImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil,
                                 bottom: titleLabel.topAnchor, trailing: nil,
-                                padding: .init(top: 20, left: 0, bottom: 0, right: 0),
-                                size: .init(width: 0, height: 0))
+                                padding: .init(top: 20, left: 0, bottom: 0, right: 0))
     }
     
     func setupTitleLabel() {
@@ -241,8 +281,15 @@ class ViewController: UIViewController {
                          size: .init(width: 0, height: 50))
     }
     
-
+    public var screenWidth: CGFloat {
+        return UIScreen.main.bounds.width
+    }
     
+    // Screen height.
+    public var screenHeight: CGFloat {
+        return UIScreen.main.bounds.height
+    }
+
     @objc
     func handleDiary() {
         let diaryController = DiaryController()

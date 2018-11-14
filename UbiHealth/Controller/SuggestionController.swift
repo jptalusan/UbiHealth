@@ -5,13 +5,11 @@
 //  Created by Jose Paolo Talusan on 2018/08/30.
 //  Copyright © 2018 Jose Paolo Talusan. All rights reserved.
 //
-
 import UIKit
 import Firebase
 //TODO: This should be in the check friends page
-
 class SuggestionController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     let usersRef = Database.database().reference(withPath: "users")
     let suggestionsRef = Database.database().reference(withPath: "suggestions")
     
@@ -97,15 +95,15 @@ class SuggestionController: UIViewController, UITableViewDelegate, UITableViewDa
                 
                 //TODO: Ask if want to overwrite prior entry
                 print("Suggestion already given this day")
-//                if let entry = entries["entry"],
-//                    let time = entries["time"] as? String {
-//                    let entryStr = entry as! String
-//
-//                    let date = String(dateString.split(separator: " ")[0])
-//                    let datetime = date + " " + time
-//                    self.showAlertError(title: "Duplicate entry detected.", "You entered: \(entryStr.capitalizeFirstLetter()) on \(datetime.UTCStringToLocalString)")
-//                    return
-//                }
+                //                if let entry = entries["entry"],
+                //                    let time = entries["time"] as? String {
+                //                    let entryStr = entry as! String
+                //
+                //                    let date = String(dateString.split(separator: " ")[0])
+                //                    let datetime = date + " " + time
+                //                    self.showAlertError(title: "Duplicate entry detected.", "You entered: \(entryStr.capitalizeFirstLetter()) on \(datetime.UTCStringToLocalString)")
+                //                    return
+                //                }
             } else {
                 let values = [//"type": diaryEntryType as String,
                     "suggested": String(output),

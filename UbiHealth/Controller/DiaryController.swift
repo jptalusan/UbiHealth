@@ -13,6 +13,7 @@ class DiaryController: UIViewController {
 
     let ref = Database.database().reference(withPath: "users")
     
+    
     lazy var breakfastButton: UIButton = {
         let button = UIButton(type: .system)
 //        button.backgroundColor = UIColor(r: 80, g: 101, b:161)
@@ -26,6 +27,7 @@ class DiaryController: UIViewController {
         button.backgroundColor = UIColor(red: 80/255, green: 101/255, blue: 161/255, alpha: 0.4)
         
         button.setTitle("Breakfast", for: .normal)
+//        button.setBackgroundImage(UIImage (named: "bk"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -53,6 +55,7 @@ class DiaryController: UIViewController {
         button.layer.cornerRadius = cornerRadius
         button.backgroundColor = UIColor(red: 80/255, green: 101/255, blue: 161/255, alpha: 0.4)
         
+//        button.setBackgroundImage(UIImage (named: "diet"), for: .normal)
         button.setTitle("Lunch", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.white, for: .normal)
@@ -83,6 +86,7 @@ class DiaryController: UIViewController {
         button.backgroundColor = UIColor(red: 80/255, green: 101/255, blue: 161/255, alpha: 0.4)
         
         button.setTitle("Snacks", for: .normal)
+//        button.setBackgroundImage(UIImage (named: "diet"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -101,7 +105,7 @@ class DiaryController: UIViewController {
     
     lazy var dinnerButton: UIButton = {
         let button = UIButton(type: .system)
-//        button.backgroundColor = UIColor(r: 80, g: 101, b:161)
+        button.backgroundColor = UIColor(r: 80, g: 101, b:161)
         
         let borderAlpha : CGFloat = 0.7
         let cornerRadius : CGFloat = 5.0
@@ -112,6 +116,7 @@ class DiaryController: UIViewController {
         button.backgroundColor = UIColor(red: 80/255, green: 101/255, blue: 161/255, alpha: 0.4)
         
         button.setTitle("Dinner", for: .normal)
+
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -178,7 +183,7 @@ class DiaryController: UIViewController {
 
         //Setting of background image
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: "eatgood.png")
+        backgroundImage.image = UIImage(named: "marsh")
         backgroundImage.contentMode = UIViewContentMode.scaleAspectFill
         self.view.insertSubview(backgroundImage, at: 0)
         
@@ -195,7 +200,7 @@ class DiaryController: UIViewController {
     func setupBreakfastButton() {
         breakfastButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.centerXAnchor,
                            bottom: nil, trailing: view.trailingAnchor,
-                           padding: .init(top: 100, left: 6, bottom: 12, right: -12),
+                           padding: .init(top: 50, left: 6, bottom: 12, right: -12),
                            size: .init(width: 0, height: 150))
     }
     
@@ -208,12 +213,13 @@ class DiaryController: UIViewController {
     
     func setupExerciseButton() {
         exerciseButton.anchor(top: snacksButton.bottomAnchor, leading: view.centerXAnchor,
-                              bottom: nil, trailing: view.trailingAnchor,
-                              padding: .init(top: 12, left: 6, bottom: 0, right: -12))
+                              bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor,
+                              padding: .init(top: 12, left: 6, bottom: -50, right: -12))
         exerciseButton.anchorSize(to: breakfastButton)
     }
     
     //------
+    
     
     func setupLunchButton() {
         lunchButton.anchor(top: breakfastButton.centerYAnchor, leading: view.leadingAnchor,

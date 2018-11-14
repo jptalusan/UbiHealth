@@ -2,17 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "IMG_20181006_192025-1.jpg",
+      "filename" : "login.jpeg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "IMG_20181006_192025-2.jpg",
+      "filename" : "login-1.jpeg",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "IMG_20181006_192025.jpg",
       "scale" : "3x"
     }
   ],
