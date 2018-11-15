@@ -159,6 +159,7 @@ class ViewController: UIViewController {
         button.backgroundColor = UIColor(r: 80, g: 101, b:161)
         button.setTitle("Personal Report", for: .normal)
         button.setBackgroundImage(UIImage (named: "report"), for: .normal)
+        button.imageView!.contentMode = .scaleToFill
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
@@ -172,9 +173,9 @@ class ViewController: UIViewController {
     
     func fornotification(){
         let notifications = ["Breakfast": [8, 30],
-                             "Lunch": [16,57],
-                             "Snacks": [16,54],
-                             "Dinner": [16,56],
+                             "Lunch": [13,0],
+                             "Snacks": [21,0],
+                             "Dinner": [20,0],
                              "Exercise":[21,30]]
         
         for (diary, time) in notifications{
@@ -227,7 +228,7 @@ class ViewController: UIViewController {
         //need x, y, width, height constraints
         diaryButton.anchor(top: nameLabel.bottomAnchor, leading: view.leadingAnchor,
                            bottom: nil, trailing: view.centerXAnchor,
-                           padding: .init(top: 50, left: 12, bottom: 0, right: -6))
+                           padding: .init(top: 12, left: 12, bottom: 0, right: -6))
     }
     
     func setupSuggestionButton() {
@@ -243,7 +244,7 @@ class ViewController: UIViewController {
         //need x, y, width, height constraints
         checkFriendsButton.anchor(top: nameLabel.bottomAnchor, leading: view.centerXAnchor,
                                 bottom: nil, trailing: view.trailingAnchor,
-                                padding: .init(top: 50, left: 6, bottom: 0, right: -12))
+                                padding: .init(top: 12, left: 6, bottom: 0, right: -12))
         checkFriendsButton.anchorSize(to: diaryButton)
     }
     

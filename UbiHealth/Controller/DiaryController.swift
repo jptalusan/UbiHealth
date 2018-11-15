@@ -183,8 +183,8 @@ class DiaryController: UIViewController {
 
         //Setting of background image
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: "marsh")
-        backgroundImage.contentMode = UIViewContentMode.scaleAspectFill
+        backgroundImage.image = UIImage(named: "fruit")
+        backgroundImage.contentMode = UIViewContentMode.scaleAspectFit
         self.view.insertSubview(backgroundImage, at: 0)
         
         [breakfastButton, lunchButton, snacksButton, dinnerButton, exerciseButton].forEach { view.addSubview($0) }

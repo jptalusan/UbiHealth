@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class LoginController: UIViewController {
+class LoginController: UIViewController, UITextFieldDelegate {
 
     let usersRef = Database.database().reference(withPath: "users")
     
@@ -88,6 +88,23 @@ class LoginController: UIViewController {
             return
         }
         
+        Auth.auth().fetchProviders(forEmail: email, completion: {
+            (providers, error) in
+            
+            if let error = error {
+                print(error.localizedDescription)
+            } else if let providers = providers {
+                print(providers)
+                let alert = UIAlertController(title: "Email already exists",
+                                              message: "Please register again with a new email.",
+                                              preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+        })
+        
         Auth.auth().createUser(withEmail: email, password: password) {
             user, error in
             
@@ -110,6 +127,7 @@ class LoginController: UIViewController {
                     self.navigationController?.popViewController(animated: true)
                 }
             } else {
+                print("error in registration")
                 let alert = UIAlertController(title: "Registration Failed",
                                               message: error?.localizedDescription,
                                               preferredStyle: .alert)
@@ -161,7 +179,7 @@ class LoginController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "bk")
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
+//        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -199,6 +217,10 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        nameTextField.delegate = self
+        self.emailTextField.delegate = self
+        self.passwordTextField.delegate = self
+
         view.backgroundColor = UIColor(r: 61, g: 91, b: 151)
 //        self.navigationItem.hidesBackButton = true
 
@@ -230,27 +252,46 @@ class LoginController: UIViewController {
     
     func setupLoginRegisterSegmentedControl() {
         loginRegisterSegmentedControl.anchor(top: profileImageView.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,
-                                             padding: .init(top: 30, left: 12, bottom: 0, right: -12),
-                                             size: .init(width: 0, height: 50))
+            padding: .init(top: 12, left: 12, bottom: 0, right: -12),size: .init(width: 0, height: 50))
         
         //need x, y, width, height constraints
-        loginRegisterSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        loginRegisterSegmentedControl.bottomAnchor.constraint(equalTo: inputsContainerView.topAnchor,constant: -12).isActive = true
-//        loginRegisterSegmentedControl.widthAnchor.constraint(equalTo: inputsContainerView.widthAnchor, multiplier: 1).isActive = true
-//        loginRegisterSegmentedControl.heightAnchor.constraint(equalToConstant: 36).isActive = true
+//        loginRegisterSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     func setupProfileImageView() {
         profileImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor,
-                                padding: .init(top: 12, left: 12, bottom: 0, right: -12),
-                                size: .init(width: 200, height: 200))
+                                padding: .init(top: 0, left: 12, bottom: 0, right: -12),
+                                size: .init(width: 0, height: 200))
         //need x, y, width, height constraints
-        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        // -12 to be above 12 pixels
-//        profileImageView.bottomAnchor.constraint(equalTo: loginRegisterSegmentedControl.topAnchor, constant: -12).isActive = true
-//        profileImageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
-//        profileImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+//        profileImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        //textField code
+        let text = textField.placeholder
+        print(text!)
+            switch text{
+            case "Name":
+                emailTextField.becomeFirstResponder()
+            case "Email Address":
+                passwordTextField.becomeFirstResponder()
+            case "Password":
+                print("login")
+                passwordTextField.resignFirstResponder()
+                handleLoginRegister()
+            default:
+                break
+            }
+
+        
+        performAction()
+        return true
+    }
+    
+    func performAction() {
+        print("anything")
     }
     
     var inputsContainerViewHeightAnchor: NSLayoutConstraint?
