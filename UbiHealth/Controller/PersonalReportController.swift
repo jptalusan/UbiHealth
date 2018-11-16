@@ -139,7 +139,7 @@ class PersonalReportController: UIViewController {
     func setupTitleLabel() {
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
         titleLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: pieChart.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
+        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: pieChart.topAnchor, trailing: view.trailingAnchor, padding: .init(top: -10, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
     }
     
     func setupPieChart() {

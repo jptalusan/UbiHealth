@@ -71,6 +71,7 @@ class ViewController: UIViewController {
     func handleLogout() {
         do {
             try Auth.auth().signOut()
+//             nameLabel.text=nil
 //            self.dismiss(animated: true, completion: nil)
         } catch (let error) {
             print("Auth sign out failed: \(error)")
@@ -159,7 +160,7 @@ class ViewController: UIViewController {
         button.backgroundColor = UIColor(r: 80, g: 101, b:161)
         button.setTitle("Personal Report", for: .normal)
         button.setBackgroundImage(UIImage (named: "report"), for: .normal)
-        button.imageView!.contentMode = .scaleToFill
+//        button.imageView!.contentMode = .scaleAspectFit
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
