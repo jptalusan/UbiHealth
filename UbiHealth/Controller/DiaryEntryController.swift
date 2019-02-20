@@ -91,19 +91,34 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
             if snapshot.hasChild("entry") && snapshot.hasChild("time") {
                 var entries = snapshot.value as! [String:AnyObject]
                 print(entries)
-                
+
                 //TODO: Ask if want to overwrite prior entry
                 print("Entry already exists")
                 if let entry = entries["entry"],
                     let time = entries["time"] as? String {
                     let entryStr = entry as! String
-                    
-                    let date = String(dateString.split(separator: " ")[0])
-                    let datetime = date + " " + time
-                    self.showAlertError(title: "Oops!", "You have already submitted this entry for today -> \(entryStr.capitalizeFirstLetter()) at \(datetime.UTCStringToLocalString)")
+                    let newentry = entryStr + ";" + String(output)
+                    let values = [//"type": diaryEntryType as String,
+                        "entry": newentry,
+                        "time": timeString]
+                    diaryEntryRef.updateChildValues(values) {
+                        error, ref in
+                        if error != nil {
+                            print(error!.localizedDescription)
+                            self.showAlertError(title: "Error inserting data", error!.localizedDescription)
+                            return
+                        }
+                        print("Saved successfully into firebase")
+                        self.navigationController?.popViewController(animated: true)
+                    }
+//                    let date = String(dateString.split(separator: " ")[0])
+//                    let datetime = date + " " + time
+//                    self.showAlertError(title: "Oops!", "You have already submitted this entry for today -> \(entryStr.capitalizeFirstLetter()) at \(datetime.UTCStringToLocalString)")
                     return
                 }
-            } else {
+            }
+
+            else {
                 let values = [//"type": diaryEntryType as String,
                               "entry": String(output),
                               "time": timeString]

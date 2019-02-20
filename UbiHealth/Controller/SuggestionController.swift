@@ -94,16 +94,16 @@ class SuggestionController: UIViewController, UITableViewDelegate, UITableViewDa
                 print(entries)
                 
                 //TODO: Ask if want to overwrite prior entry
-                print("Suggestion already given this day")
-                //                if let entry = entries["entry"],
-                //                    let time = entries["time"] as? String {
-                //                    let entryStr = entry as! String
-                //
-                //                    let date = String(dateString.split(separator: " ")[0])
-                //                    let datetime = date + " " + time
-                //                    self.showAlertError(title: "Duplicate entry detected.", "You entered: \(entryStr.capitalizeFirstLetter()) on \(datetime.UTCStringToLocalString)")
-                //                    return
-                //                }
+//                print("Suggestion already given this day")
+//                                if let entry = entries["entry"],
+//                                    let time = entries["time"] as? String {
+//                                    let entryStr = entry as! String
+//
+//                                    let date = String(dateString.split(separator: " ")[0])
+//                                    let datetime = date + " " + time
+//                                    self.showAlertError(title: "Duplicate entry detected.", "You entered: \(entryStr.capitalizeFirstLetter()) on \(datetime.UTCStringToLocalString)")
+//                                    return
+//                                }
             } else {
                 let values = [//"type": diaryEntryType as String,
                     "suggested": String(output),

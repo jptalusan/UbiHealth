@@ -211,14 +211,14 @@ class PersonalReportController: UIViewController {
         let diaryEntryRef = usersRef.child(userID).child("diary_entries")
         
         //Firebase is asynchronous
-        let lastWeekDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!
-        let startOfLastWeek = lastWeekDate.startOfWeek
-        let endOfLastWeek = lastWeekDate.endOfWeek
+//        let lastWeekDate = Calendar.current.date(byAdding: .weekOfYear, value: -1, to: Date())!
+//        let startOfLastWeek = lastWeekDate.startOfWeek
+//        let endOfLastWeek = lastWeekDate.endOfWeek
         
-        let start = startOfLastWeek?.strippedTime(time: "00:00:00 +0000")
-        let end = endOfLastWeek?.strippedTime(time: "23:59:59 +0000")
+//        let start = startOfLastWeek?.strippedTime(time: "00:00:00 +0000")
+//        let end = endOfLastWeek?.strippedTime(time: "23:59:59 +0000")
         
-        self.titleLabel.text = (startOfLastWeek?.dateString)! + " to " + (endOfLastWeek?.dateString)!
+//        self.titleLabel.text = (startOfLastWeek?.dateString)! + " to " + (endOfLastWeek?.dateString)!
         
         diaryEntryRef.observe(.value, with: { snapshot in
             var diaryEntries: [DiaryEntry] = []
@@ -228,9 +228,14 @@ class PersonalReportController: UIViewController {
                 for snapChild in snap.children {
                     if let snapChildSnap = snapChild as? DataSnapshot,
                         let diaryEntry = DiaryEntry(date: childDate, snapshot: snapChildSnap) {
-                        if ((diaryEntry.date >= start!) && (diaryEntry.date <= end!)) {
+                       
+                       
                             diaryEntries.append(diaryEntry)
-                        }
+                      //  }
+                        
+//                        if ((diaryEntry.date >= start!) && (diaryEntry.date <= end!)) {
+//                            diaryEntries.append(diaryEntry)
+//                        }
                     }
                 }
             }

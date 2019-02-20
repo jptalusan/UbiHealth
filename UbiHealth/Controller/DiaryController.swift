@@ -179,13 +179,13 @@ class DiaryController: UIViewController {
     
 //        navigationController?.navigationBar.prefersLargeTitles = true
         
-//        view.backgroundColor = UIColor(r: 61, g: 91, b: 151)
+        view.backgroundColor = UIColor(r: 61, g: 91, b: 151)
 
         //Setting of background image
-        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: "fruit")
-        backgroundImage.contentMode = UIViewContentMode.scaleAspectFit
-        self.view.insertSubview(backgroundImage, at: 0)
+//        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
+//        backgroundImage.image = UIImage(named: "fruit")
+//        backgroundImage.contentMode = UIViewContentMode.scaleAspectFit
+//        self.view.insertSubview(backgroundImage, at: 0)
         
         [breakfastButton, lunchButton, snacksButton, dinnerButton, exerciseButton].forEach { view.addSubview($0) }
         setupBreakfastButton()
