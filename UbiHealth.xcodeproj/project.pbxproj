@@ -17,6 +17,11 @@
 		08800A7321807B2700DED48F /* SuggestionsForYouController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08800A7221807B2700DED48F /* SuggestionsForYouController.swift */; };
 		08800A7521809C0A00DED48F /* Suggestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08800A7421809C0A00DED48F /* Suggestion.swift */; };
 		08810F69213924F9009DDD0D /* DiaryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08810F68213924F9009DDD0D /* DiaryEntry.swift */; };
+		08AFEF29221D2905005436A9 /* UbiHealth-research in Resources */ = {isa = PBXBuildFile; fileRef = 08AFEF28221D2905005436A9 /* UbiHealth-research */; };
+		08AFEF2D221D29CA005436A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08AFEF2C221D29CA005436A9 /* GoogleService-Info.plist */; };
+		08AFEF35221D3880005436A9 /* ExpandableNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AFEF34221D3880005436A9 /* ExpandableNames.swift */; };
+		08AFEF37221D5F67005436A9 /* FoodServingDict.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AFEF36221D5F67005436A9 /* FoodServingDict.swift */; };
+		08AFEF39221D922C005436A9 /* FoodItemClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08AFEF38221D922C005436A9 /* FoodItemClass.swift */; };
 		08C74CF4213BC9470063CE07 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C74CF3213BC9470063CE07 /* Extensions.swift */; };
 		08F165242137C59E005A457E /* DiaryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165232137C59E005A457E /* DiaryController.swift */; };
 		08F165262137CB78005A457E /* DiaryEntryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F165252137CB78005A457E /* DiaryEntryController.swift */; };
@@ -26,7 +31,6 @@
 		08F1652E21380614005A457E /* CheckFriendsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F1652D21380614005A457E /* CheckFriendsController.swift */; };
 		08F1653021390F70005A457E /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F1652F21390F70005A457E /* Charts.framework */; };
 		76340BCA98606D87831EC3BC /* Pods_UbiHealth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 381F259722364B381AFF880E /* Pods_UbiHealth.framework */; };
-		BBC7E0EB219BF43500A0ED6C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBC7E0EA219BF43500A0ED6C /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +46,11 @@
 		08800A7221807B2700DED48F /* SuggestionsForYouController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsForYouController.swift; sourceTree = "<group>"; };
 		08800A7421809C0A00DED48F /* Suggestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Suggestion.swift; sourceTree = "<group>"; };
 		08810F68213924F9009DDD0D /* DiaryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryEntry.swift; sourceTree = "<group>"; };
+		08AFEF28221D2905005436A9 /* UbiHealth-research */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "UbiHealth-research"; sourceTree = "<group>"; };
+		08AFEF2C221D29CA005436A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		08AFEF34221D3880005436A9 /* ExpandableNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableNames.swift; sourceTree = "<group>"; };
+		08AFEF36221D5F67005436A9 /* FoodServingDict.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodServingDict.swift; sourceTree = "<group>"; };
+		08AFEF38221D922C005436A9 /* FoodItemClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItemClass.swift; sourceTree = "<group>"; };
 		08C74CF3213BC9470063CE07 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		08F165202136C2C3005A457E /* UbiHealth.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UbiHealth.entitlements; sourceTree = "<group>"; };
 		08F165232137C59E005A457E /* DiaryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryController.swift; sourceTree = "<group>"; };
@@ -54,7 +63,6 @@
 		3611EA5CFD042CCE3961CC60 /* Pods-UbiHealth.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UbiHealth.release.xcconfig"; path = "Pods/Target Support Files/Pods-UbiHealth/Pods-UbiHealth.release.xcconfig"; sourceTree = "<group>"; };
 		381F259722364B381AFF880E /* Pods_UbiHealth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UbiHealth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5E50FF743F6A27F73C160BD /* Pods-UbiHealth.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UbiHealth.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UbiHealth/Pods-UbiHealth.debug.xcconfig"; sourceTree = "<group>"; };
-		BBC7E0EA219BF43500A0ED6C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +96,7 @@
 		0867FD05213660640056D0B8 = {
 			isa = PBXGroup;
 			children = (
+				08AFEF28221D2905005436A9 /* UbiHealth-research */,
 				0867FD10213660640056D0B8 /* UbiHealth */,
 				0867FD0F213660640056D0B8 /* Products */,
 				A0268ABA7CC124100C1AD75C /* Pods */,
@@ -112,8 +121,8 @@
 				0867FD11213660640056D0B8 /* AppDelegate.swift */,
 				0867FD15213660650056D0B8 /* Main.storyboard */,
 				0867FD182136606A0056D0B8 /* Assets.xcassets */,
+				08AFEF2C221D29CA005436A9 /* GoogleService-Info.plist */,
 				0867FD1A2136606A0056D0B8 /* LaunchScreen.storyboard */,
-				BBC7E0EA219BF43500A0ED6C /* GoogleService-Info.plist */,
 				0867FD1D2136606A0056D0B8 /* Info.plist */,
 				08C74CF3213BC9470063CE07 /* Extensions.swift */,
 			);
@@ -127,6 +136,9 @@
 				08810F68213924F9009DDD0D /* DiaryEntry.swift */,
 				08800A7021804B5A00DED48F /* User.swift */,
 				08800A7421809C0A00DED48F /* Suggestion.swift */,
+				08AFEF34221D3880005436A9 /* ExpandableNames.swift */,
+				08AFEF36221D5F67005436A9 /* FoodServingDict.swift */,
+				08AFEF38221D922C005436A9 /* FoodItemClass.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -161,7 +173,7 @@
 				0867FD0B213660640056D0B8 /* Frameworks */,
 				0867FD0C213660640056D0B8 /* Resources */,
 				8E82E86B555BD15CA9FA4131 /* [CP] Embed Pods Frameworks */,
-				08F1653121390F8B005A457E /* ShellScript */,
+				08F1653121390F8B005A457E /* Run Script */,
 				BBD26F892181C95100A04743 /* ShellScript */,
 			);
 			buildRules = (
@@ -223,8 +235,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0867FD1C2136606A0056D0B8 /* LaunchScreen.storyboard in Resources */,
-				BBC7E0EB219BF43500A0ED6C /* GoogleService-Info.plist in Resources */,
+				08AFEF2D221D29CA005436A9 /* GoogleService-Info.plist in Resources */,
 				0867FD192136606A0056D0B8 /* Assets.xcassets in Resources */,
+				08AFEF29221D2905005436A9 /* UbiHealth-research in Resources */,
 				0867FD17213660650056D0B8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,7 +245,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		08F1653121390F8B005A457E /* ShellScript */ = {
+		08F1653121390F8B005A457E /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -240,6 +253,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
 			);
+			name = "Run Script";
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Carthage/Build/iOS/Charts.framework",
 			);
@@ -321,8 +335,11 @@
 				08F165282137F02C005A457E /* PassClass.swift in Sources */,
 				08F165242137C59E005A457E /* DiaryController.swift in Sources */,
 				08800A7521809C0A00DED48F /* Suggestion.swift in Sources */,
+				08AFEF37221D5F67005436A9 /* FoodServingDict.swift in Sources */,
+				08AFEF39221D922C005436A9 /* FoodItemClass.swift in Sources */,
 				08F1652A213804E5005A457E /* PersonalReportController.swift in Sources */,
 				08800A7321807B2700DED48F /* SuggestionsForYouController.swift in Sources */,
+				08AFEF35221D3880005436A9 /* ExpandableNames.swift in Sources */,
 				08810F69213924F9009DDD0D /* DiaryEntry.swift in Sources */,
 				0842A7E321367B4300DCAC2A /* LoginController.swift in Sources */,
 				08800A7121804B5A00DED48F /* User.swift in Sources */,

@@ -18,11 +18,21 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
     let cellId = "cellId"
     var diaryEntryType: String = ""
     
+    var twoDimensionItemArray: [ExpandableNames] = []
+    
+    var selectedItems: [Int : Int] = [Int : Int]()
+    
+    var showIndexPaths = false
+    
+    @objc func handleShowIndex() {
+        print("Attempting to reload")
+    }
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(FoodItemClass.self, forCellReuseIdentifier: cellId)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.alwaysBounceVertical = false
@@ -59,35 +69,40 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @objc
     func handleSubmit() {
-        guard let selectedIndexes = tableView.indexPathsForSelectedRows else {
+//        guard let selectedIndexes = tableView.indexPathsForSelectedRows else {
+        if selectedItems.count == 0 {
             showAlertError(title: "Sorry! No Items Selected", "Please select an entry.")
             return
         }
         
         var itemCSV: String = ""
-        for index in selectedIndexes {
-            itemCSV += "\(items[index.row]);"
+        for (section, row) in selectedItems {
+            let foodItem = twoDimensionItemArray[section].header
+            let foodQuantity = twoDimensionItemArray[section].names[row].split(separator: " ")[0]
+            print("You ate \(foodQuantity) of \(foodItem)")
+            itemCSV += "\(foodItem)-\(foodQuantity);"
         }
+        
         let output = itemCSV.dropLast()
         print(output)
 
-        //Use as key
+//        //Use as key
         let currentDateTime = Date()
         let currentDateTimeString = currentDateTime.currentUTCDateTimeToString
-        
+
         let datetimeStringArray = currentDateTimeString.components(separatedBy: " ")
-        
+
         let dateString = datetimeStringArray[0] + " 00:00:00 +0000" //"2018-03-15 21:05:04 +0000"
         let timeString = datetimeStringArray[1] + " " + datetimeStringArray[2]
-        
+
         let userID = Auth.auth().currentUser!.uid
-        
+
         //TODO Check if entry exists for the day and ask if want to overwrite
         let diaryEntryRef = usersRef.child(userID).child("diary_entries").child(dateString).child(diaryEntryType)
-        
+
         diaryEntryRef.observeSingleEvent(of: .value, with: { (snapshot) in
             print("observerSingleEvent")
-            
+
             if snapshot.hasChild("entry") && snapshot.hasChild("time") {
                 var entries = snapshot.value as! [String:AnyObject]
                 print(entries)
@@ -97,6 +112,7 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
                 if let entry = entries["entry"],
                     let time = entries["time"] as? String {
                     let entryStr = entry as! String
+//                    THIS IS FOR DEBUGGING
                     let newentry = entryStr + ";" + String(output)
                     let values = [//"type": diaryEntryType as String,
                         "entry": newentry,
@@ -135,6 +151,49 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         })
     }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 34
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let button = UIButton(type: .system)
+        button.setTitle("   \(twoDimensionItemArray[section].header.camelCapital()) +", for: .normal)
+        
+        button.backgroundColor = .clear
+        button.layer.cornerRadius = 5
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.black.cgColor
+        button.contentHorizontalAlignment = .leading
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
+        button.tag = section
+        return button
+    }
+    
+    @objc func handleExpandClose(button: UIButton) {
+        print("Trying to expand")
+        let section = button.tag
+        var indexPaths = [IndexPath]()
+
+        for row in twoDimensionItemArray[section].names.indices {
+            print(0, row)
+            let indexPath = IndexPath(row: row, section: section)
+            indexPaths.append(indexPath)
+        }
+
+        let isExpanded = twoDimensionItemArray[section].isExpanded
+        twoDimensionItemArray[section].isExpanded = !isExpanded
+
+        if !isExpanded {
+            tableView.insertRows(at: indexPaths, with: .fade)
+        } else {
+            tableView.deleteRows(at: indexPaths, with: .fade)
+        }
+        let title = twoDimensionItemArray[section].header
+        button.setTitle(!isExpanded ? "   \(title.camelCapital()) -" : "   \(title.camelCapital()) +", for: .normal)
+    }
     
     override func viewDidLoad() {
         //TODO: Check if date and entry exists, if so, grey out or have some indicator that it's filled up
@@ -145,10 +204,6 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
         
         navigationItem.title = "\(diaryEntryType) Diary Entry"
         
-        [tableView, submitButton].forEach { view.addSubview($0) }
-        
-        setupTableView()
-        setupSubmitButton()
         
         var entryTypeRef: DatabaseReference
         
@@ -169,22 +224,71 @@ class DiaryEntryController: UIViewController, UITableViewDelegate, UITableViewDa
                 }
             }
             self.items = newItems
+            
+            for item in self.items {
+                //                print(FoodServingDict[item])
+                let en = ExpandableNames(isExpanded: false, names: FoodServingDict[item] ?? ["30 minutes", "60 minutes", "90 minutes", "120 minutes"], header: item)
+                self.twoDimensionItemArray.append(en)
+            }
+            
             self.tableView.reloadData()
+            
         }
+        
+        [tableView, submitButton].forEach { view.addSubview($0) }
+        
+        setupTableView()
+        setupSubmitButton()
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return twoDimensionItemArray.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Int(count)
+        if !twoDimensionItemArray[section].isExpanded {
+            return 0
+        }
+        return twoDimensionItemArray[section].names.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
-        let foodItem = items[indexPath.row]
-        
-        cell.textLabel?.text = foodItem.capitalizeFirstLetter()
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! FoodItemClass
+        cell.link = self
+        if twoDimensionItemArray.count != 0 {
+            if twoDimensionItemArray[indexPath.section].isExpanded {
+                let foodItem = twoDimensionItemArray[indexPath.section].names[indexPath.row]
+                cell.textLabel?.text = foodItem.capitalizeFirstLetter()
+                cell.detailTextLabel?.text = "-"
+            }
+        }
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        selectedItems.removeValue(forKey: indexPath.section)
+        print("This cell was selected and now deselected: \(indexPath.section), \(indexPath.row)")
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.detailTextLabel?.text = "-"
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = indexPath.section
+        let selected_row = indexPath.row
+        selectedItems[section] = selected_row
+        print(selectedItems)
+        for row in twoDimensionItemArray[section].names.indices {
+            if row != selected_row {
+                let indexPath = IndexPath(row: row, section: section)
+                tableView.deselectRow(at: indexPath, animated: false)
+                let cell = tableView.cellForRow(at: indexPath)
+                cell?.detailTextLabel?.text = "-"
+            }
+        }
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.detailTextLabel?.text = "+"
     }
     
     func setupTableView() {

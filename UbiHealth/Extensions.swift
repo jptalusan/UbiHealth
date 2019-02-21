@@ -84,6 +84,17 @@ extension Date {
 }
 
 extension String {
+    
+    func camelCapital() -> String {
+        let words = self.split(separator: "/")
+        var out: [String] = []
+        for word in words {
+            let word = String(word)
+            out.append(word.capitalizeFirstLetter())
+        }
+        return out.joined(separator:"/")
+    }
+    
     func capitalizeFirstLetter() -> String {
         return prefix(1).uppercased() + dropFirst()
     }

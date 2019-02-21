@@ -10,8 +10,18 @@ import UIKit
 import Firebase
 import Charts
 
-class PersonalReportController: UIViewController {
-
+class PersonalReportController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if dietExerciseSegmentedControl.selectedSegmentIndex == 0 {
+            return foodTableViewList.count
+        } else {
+            return exerTableViewList.count
+        }
+    }
+    
+    var newFoodDict: [String : Int] = [String : Int]()
+    var newExerDict: [String : Int] = [String : Int]()
+    let cellId = "cellId"
 //    let ref = Database.database().reference(withPath: "diarychoices")
     let usersRef = Database.database().reference(withPath: "users")
     var userID: String = ""
@@ -21,6 +31,9 @@ class PersonalReportController: UIViewController {
     var exerEntriesDict = [String: Int]()
     var isThisCurrentUser = false
     var colors: [UIColor] = []
+    var foodTableViewList: [String] = []
+    
+    var exerTableViewList: [String] = []
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -33,6 +46,22 @@ class PersonalReportController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         return label
+    }()
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .white
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(SubtitleTableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.alwaysBounceVertical = false
+        tableView.bounces = false
+        tableView.layer.cornerRadius = 5
+        tableView.layer.masksToBounds = true
+        tableView.allowsMultipleSelection = true
+        tableView.allowsMultipleSelectionDuringEditing = true
+        return tableView
     }()
     
     lazy var pieChart: PieChartView = {
@@ -91,10 +120,16 @@ class PersonalReportController: UIViewController {
         print(dietExerciseSegmentedControl.selectedSegmentIndex)
 //        pieChart.animate(xAxisDuration: 0.5, yAxisDuration: 0.5)
         if dietExerciseSegmentedControl.selectedSegmentIndex == 0 {
-            self.fillChart(entriesDict: self.foodEntriesDict)
+//            self.fillChart(entriesDict: self.foodEntriesDict)
+//            self.foodTableViewList = self.newFoodDict.map{ "\($0.key) \($0.value)" }
         } else {
-            self.fillChart(entriesDict: self.exerEntriesDict)
+//            self.fillChart(entriesDict: self.exerEntriesDict)
+            print("EXER BUTTON")
+//            self.foodTableViewList = self.newExerDict.map{ "\($0.key) \($0.value)" }
         }
+        print(self.foodTableViewList)
+        
+        self.tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -115,7 +150,8 @@ class PersonalReportController: UIViewController {
         })
         
         view.addSubview(titleLabel)
-        view.addSubview(pieChart)
+//        view.addSubview(pieChart)
+        view.addSubview(tableView)
         view.addSubview(dietExerciseSegmentedControl)
         if (currentUserID != userID) {
             view.addSubview(suggestionButton)
@@ -124,7 +160,7 @@ class PersonalReportController: UIViewController {
         } else {
             isThisCurrentUser = true
         }
-        setupPieChart()
+//        setupPieChart()
         setupDietExerciseSegmentedControl()
         setupTitleLabel()
         getEntriesFromDB()
@@ -134,14 +170,25 @@ class PersonalReportController: UIViewController {
         diaryEntryRef.observe(.value, with: { snapshot in
             self.getEntriesFromDB()
         })
+        setupTableView()
     }
     
     func setupTitleLabel() {
         titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
         titleLabel.centerYAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
-        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: pieChart.topAnchor, trailing: view.trailingAnchor, padding: .init(top: -10, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
+        titleLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: tableView.topAnchor, trailing: view.trailingAnchor, padding: .init(top: -10, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 0))
     }
     
+    func setupTableView() {
+        tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
+        tableView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
+        
+        if (isThisCurrentUser) {
+            tableView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -8, right: 0), size: .init(width: 0, height: view.frame.height - 100))
+        } else {
+            tableView.anchor(top: nil, leading: view.leadingAnchor, bottom: dietExerciseSegmentedControl.topAnchor, trailing: view.trailingAnchor, padding: .init(top: 0, left: 0, bottom: -8, right: 0), size: .init(width: 0, height: view.frame.height - 150))
+        }
+    }
     func setupPieChart() {
         pieChart.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
         pieChart.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
@@ -160,7 +207,8 @@ class PersonalReportController: UIViewController {
     
     func setupSuggestionButton() {
         suggestionButton.anchor(top: nil, leading: view.leadingAnchor,
-                                bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor,padding: .init(top: 8, left: 8, bottom: -8, right: -8), size: .init(width: 0, height: 50))
+                                bottom: view.bottomAnchor, trailing: view.trailingAnchor,
+                                padding: .init(top: 8, left: 8, bottom: -8, right: -8), size: .init(width: 0, height: 200))
     }
     
     func fillChart(entriesDict: [String: Int]) {
@@ -253,15 +301,89 @@ class PersonalReportController: UIViewController {
                     entryArray.forEach { exerciseEntryArray.append(String($0)) }
                 }
             }
-            self.foodEntriesDict = foodEntryArray.freq()
-            self.exerEntriesDict = exerciseEntryArray.freq()
             
-            if self.dietExerciseSegmentedControl.selectedSegmentIndex == 0 {
-                self.fillChart(entriesDict: self.foodEntriesDict)
-            } else {
-                self.fillChart(entriesDict: self.exerEntriesDict)
+            print("foodEntryArray", foodEntryArray)
+            print("exerciseEntryArray", exerciseEntryArray)
+//            Only need to change here for new code
+            
+//            self.foodEntriesDict = foodEntryArray.freq()
+//            self.exerEntriesDict = exerciseEntryArray.freq()
+            self.newFoodDict = [String : Int]()
+            self.newExerDict = [String : Int]()
+            
+            for foodEntry in foodEntryArray {
+                let tempArr = foodEntry.split(separator: "-")
+                let foodName = String(tempArr[0])
+                let quantity = Int(tempArr[1])
+                if let val = self.newFoodDict[foodName] {
+                    self.newFoodDict[foodName] = val + quantity!
+                } else {
+                    self.newFoodDict[foodName] = quantity!
+                }
+                foodEntryArray = foodEntryArray.filter{$0 != foodEntry}
             }
+            
+            self.foodTableViewList = self.newFoodDict.map{ "\($0.key) \($0.value)" }
+            
+            for exerEntry in exerciseEntryArray {
+                let tempArr = exerEntry.split(separator: "-")
+                let exerName = String(tempArr[0])
+                let quantity = Int(tempArr[1])
+                if let val = self.newExerDict[exerName] {
+                    self.newExerDict[exerName] = val + quantity!
+                } else {
+                    self.newExerDict[exerName] = quantity!
+                }
+                exerciseEntryArray = exerciseEntryArray.filter{$0 != exerEntry}
+            }
+            
+            self.exerTableViewList = self.newExerDict.map{ "\($0.key) \($0.value)" }
+            self.tableView.reloadData()
         })
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+
+        if dietExerciseSegmentedControl.selectedSegmentIndex == 0 {
+            var entryArr = foodTableViewList[indexPath.row].split(separator: " ")
+            print("Entry ARR: \(entryArr)")
+            let amount = entryArr.removeLast()
+            let entryLabel = entryArr.joined(separator: " ")
+
+            var suffix = FoodServingSuffix[entryLabel]
+            if Int(String(amount))! > 1 {
+                suffix = suffix! + "s"
+            }
+            cell.textLabel?.text = entryLabel.camelCapital()
+            cell.detailTextLabel?.text = "\(amount) \(suffix!)"
+        } else {
+            var entryArr = exerTableViewList[indexPath.row].split(separator: " ")
+            print("Entry ARR: \(entryArr)")
+            let amount = entryArr.removeLast()
+            let entryLabel = entryArr.joined(separator: " ")
+            
+            let suffix = "minutes"
+            cell.textLabel?.text = entryLabel.camelCapital()
+            cell.detailTextLabel?.text = "\(amount) \(suffix)"
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
+        return cell
+    }
+}
+
+func matches(for regex: String, in text: String) -> [String] {
+    
+    do {
+        let regex = try NSRegularExpression(pattern: regex)
+        let results = regex.matches(in: text,
+                                    range: NSRange(text.startIndex..., in: text))
+        return results.map {
+            String(text[Range($0.range, in: text)!])
+        }
+    } catch let error {
+        print("invalid regex: \(error.localizedDescription)")
+        return []
     }
 }
 
@@ -275,3 +397,15 @@ extension Sequence where Self.Iterator.Element: Hashable {
         }
     }
 }
+
+class SubtitleTableViewCell: UITableViewCell {
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .value1, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
