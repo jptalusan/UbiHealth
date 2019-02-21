@@ -311,33 +311,37 @@ class PersonalReportController: UIViewController, UITableViewDelegate, UITableVi
             self.newFoodDict = [String : Int]()
             self.newExerDict = [String : Int]()
             
-            for foodEntry in foodEntryArray {
-                let tempArr = foodEntry.split(separator: "-")
-                let foodName = String(tempArr[0])
-                let quantity = Int(tempArr[1])
-                if let val = self.newFoodDict[foodName] {
-                    self.newFoodDict[foodName] = val + quantity!
-                } else {
-                    self.newFoodDict[foodName] = quantity!
+            if foodEntryArray.count > 0 {
+                for foodEntry in foodEntryArray {
+                    let tempArr = foodEntry.split(separator: "-")
+                    let foodName = String(tempArr[0])
+                    let quantity = Int(tempArr[1])
+                    if let val = self.newFoodDict[foodName] {
+                        self.newFoodDict[foodName] = val + quantity!
+                    } else {
+                        self.newFoodDict[foodName] = quantity!
+                    }
+                    foodEntryArray = foodEntryArray.filter{$0 != foodEntry}
                 }
-                foodEntryArray = foodEntryArray.filter{$0 != foodEntry}
+                
+                self.foodTableViewList = self.newFoodDict.map{ "\($0.key) \($0.value)" }
             }
             
-            self.foodTableViewList = self.newFoodDict.map{ "\($0.key) \($0.value)" }
-            
-            for exerEntry in exerciseEntryArray {
-                let tempArr = exerEntry.split(separator: "-")
-                let exerName = String(tempArr[0])
-                let quantity = Int(tempArr[1])
-                if let val = self.newExerDict[exerName] {
-                    self.newExerDict[exerName] = val + quantity!
-                } else {
-                    self.newExerDict[exerName] = quantity!
+            if exerciseEntryArray.count > 0 {
+                for exerEntry in exerciseEntryArray {
+                    let tempArr = exerEntry.split(separator: "-")
+                    let exerName = String(tempArr[0])
+                    let quantity = Int(tempArr[1])
+                    if let val = self.newExerDict[exerName] {
+                        self.newExerDict[exerName] = val + quantity!
+                    } else {
+                        self.newExerDict[exerName] = quantity!
+                    }
+                    exerciseEntryArray = exerciseEntryArray.filter{$0 != exerEntry}
                 }
-                exerciseEntryArray = exerciseEntryArray.filter{$0 != exerEntry}
+                
+                self.exerTableViewList = self.newExerDict.map{ "\($0.key) \($0.value)" }
             }
-            
-            self.exerTableViewList = self.newExerDict.map{ "\($0.key) \($0.value)" }
             self.tableView.reloadData()
         })
     }
